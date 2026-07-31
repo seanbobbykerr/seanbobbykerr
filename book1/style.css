@@ -1,0 +1,263 @@
+/*
+  /book1 — page-specific layout and components.
+  Consumes tokens from css/tokens.css only; no new custom properties here.
+*/
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+.container {
+  max-width: var(--measure-wide);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- Header and footer -------------------------------------------------
+   Provisional. The real header and footer — including any nav — are
+   designed with the home page. This is a plain wordmark and a plain
+   identifier line, nothing more, so this page doesn't set that direction.
+------------------------------------------------------------------------- */
+
+.site-header {
+  padding: var(--space-md) var(--gutter);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  font-family: var(--font-utility);
+  font-size: var(--text-small-size);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.wordmark:hover,
+.wordmark:focus-visible {
+  color: var(--accent);
+}
+
+.site-footer {
+  padding: var(--space-md) var(--gutter);
+  border-top: 1px solid var(--rule);
+  background: var(--ground-below);
+}
+
+.site-footer p {
+  margin: 0;
+  font-family: var(--font-utility);
+  font-size: var(--text-small-size);
+  color: var(--ink-quiet);
+}
+
+/* ---- Above the seam: the book ------------------------------------------ */
+
+.book-intro {
+  background: var(--ground);
+  padding-block: var(--space-2xl) var(--space-3xl);
+}
+
+.label {
+  font-family: var(--font-utility);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-leading);
+  letter-spacing: var(--text-label-tracking);
+  text-transform: uppercase;
+  font-weight: var(--weight-label);
+  color: var(--label);
+  margin: 0 0 var(--space-sm);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-display-1-size);
+  line-height: var(--text-display-1-leading);
+  letter-spacing: var(--text-display-1-tracking);
+  font-weight: var(--weight-display-1);
+  color: var(--ink);
+  margin: 0 0 var(--space-lg);
+}
+
+.intro-grid {
+  display: grid;
+  /* Cover slot column is 0fr — collapsed, no front cover artwork exists yet
+     (design-direction.md section 5). When art arrives: change this to a
+     fixed width (300px, per that section) and remove [hidden] below. */
+  grid-template-columns: 0fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.cover-slot {
+  aspect-ratio: 2 / 3;
+}
+
+.placeholder {
+  border: 1px dashed var(--rule);
+  padding: var(--space-md);
+  max-width: var(--measure);
+  color: var(--ink-quiet);
+  margin: 0;
+}
+
+.placeholder-tag {
+  display: inline-block;
+  font-family: var(--font-utility);
+  font-size: var(--text-label-size);
+  letter-spacing: var(--text-label-tracking);
+  text-transform: uppercase;
+  font-weight: var(--weight-label);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.05em 0.5em;
+  margin-right: var(--space-xs);
+}
+
+/* ---- The Divide seam ----------------------------------------------------
+   Ground shifts from --ground to --ground-below here. The diamond-chain
+   divider sits on the join; the signup panel is the one element that
+   crosses it, per design-direction.md section 4.
+
+   The divider recolours via CSS mask rather than an <img>: currentColor
+   inside an externally-referenced SVG only resolves within that SVG's own
+   isolated context, not the host page's, so an <img src="…svg"> can't be
+   recoloured from here at all. mask-image works with the file as-is and
+   needs no new asset. This is a site-wide technique, not just this page's.
+------------------------------------------------------------------------- */
+
+.seam {
+  position: relative;
+  background: var(--ground-below);
+  padding-block: var(--space-3xl) var(--space-2xl);
+}
+
+.seam-divider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.25rem;
+  transform: translateY(-50%);
+  background-color: var(--rule);
+  -webkit-mask-image: url("../brand_assets/02_derived/svg/divider-diamond-chain.svg");
+  mask-image: url("../brand_assets/02_derived/svg/divider-diamond-chain.svg");
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: auto 100%;
+  mask-size: auto 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.seam-ask-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.seam-ask {
+  width: 100%;
+  min-width: 0;
+  max-width: 28rem;
+  margin-top: calc(-1 * var(--space-3xl));
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: var(--space-lg);
+  text-align: left;
+}
+
+.ask-copy {
+  margin: 0 0 var(--space-md);
+}
+
+.signup-placeholder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-sm);
+}
+
+.signup-placeholder input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-utility);
+  font-size: var(--text-small-size);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--ground);
+  color: var(--ink);
+  border: 1px solid var(--field);
+}
+
+.signup-placeholder input::placeholder { color: var(--ink-quiet); }
+.signup-placeholder input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.signup-placeholder button {
+  font-family: var(--font-utility);
+  font-size: var(--text-small-size);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--accent);
+  color: var(--ground);
+  border: 1px solid var(--accent);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.signup-note {
+  font-family: var(--font-utility);
+  font-size: var(--text-small-size);
+  color: var(--ink-quiet);
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Below the seam: the quiet secondary ask ---------------------------- */
+
+.below-seam {
+  background: var(--ground-below);
+  padding-block: var(--space-lg) var(--space-2xl);
+}
+
+.secondary-link {
+  font-family: var(--font-utility);
+  font-size: var(--text-small-size);
+  color: var(--ink-quiet);
+  margin: 0;
+}
+
+.secondary-link a { color: var(--ink-quiet); }
+.secondary-link a:hover,
+.secondary-link a:focus-visible { color: var(--accent); }
+
+/* ---- Focus ------------------------------------------------------------- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--field);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
