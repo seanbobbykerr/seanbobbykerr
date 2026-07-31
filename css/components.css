@@ -114,31 +114,31 @@
 }
 
 /* ---- 3. Diamond-chain divider, three scales -----------------------------
-   Vector, so unlike the raster assets it can tile to any width without
-   hitting the resolution ceiling. Uses mask-image rather than <img> so it
-   recolours with background-color instead of needing currentColor support
-   inside an externally-referenced SVG.
+   Inline SVG, not a CSS mask. An external-file mask-image (the previous
+   approach) rendered nothing in testing — mask-mode: alpha on a
+   cross-document reference is unreliable across engines, and a
+   currentColor fill inside an externally-referenced SVG document doesn't
+   resolve against the page at all. Both problems disappear once the SVG
+   is inline in the page's own DOM.
+
+   Each .divider is a self-contained <svg>: a <pattern> tiles the traced
+   diamond-chain motif (patternTransform scales the pattern's native
+   260×75 units down to the element's own pixel height) into a <rect>
+   that fills the element. currentColor is resolved by DOM position, not
+   by which element references the pattern — so the <defs> must live
+   inside the same <svg> as the <rect> using it for --divider-color to
+   apply correctly, and cannot be hoisted into one shared sprite.
+
+   Because pattern ids share one flat document-wide namespace, every
+   divider instance on a page needs its own id: divider-tile-{size}-{n},
+   incrementing n for each repeat of the same size on that page.
 ------------------------------------------------------------------------- */
 
 .divider {
-  --divider-color: var(--rule);
   display: block;
   margin: var(--space-lg) auto;
-  background-color: var(--divider-color);
-  -webkit-mask-image: url("../brand_assets/02_derived/svg/divider-diamond-chain.svg");
-  mask-image: url("../brand_assets/02_derived/svg/divider-diamond-chain.svg");
-  -webkit-mask-repeat: repeat-x;
-  mask-repeat: repeat-x;
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-size: auto 100%;
-  mask-size: auto 100%;
-  /* Alpha mode reads the source SVG's own opacity rather than resolving
-     currentColor (which defaults to black in an externally-referenced
-     document) — a deliberate, predictable choice rather than relying on
-     the browser's default match-source behaviour. */
-  -webkit-mask-mode: alpha;
-  mask-mode: alpha;
+  overflow: hidden;
+  color: var(--divider-color, var(--rule));
 }
 
 .divider--sm {
@@ -157,12 +157,17 @@
 }
 
 /* ---- 4. Figure treatment -------------------------------------------------
-   Back-cover illustrations. Several of the source crops carry a stray
-   sliver of the neighbouring blurb-text column or an adjoining motif —
-   see brand_assets/README.md's confidence notes. Rather than hand-crop
-   guessed boundaries, a directional fade dissolves that edge into the
-   page ground, which also stops the rectangle reading as a pasted-on
-   cutout. Pick the modifier that matches where the intrusion sits.
+   Back-cover illustrations. figure-crowned, motif-ship and motif-winged
+   were re-cropped tighter to the source TIFF (2026-07-31) so no blurb
+   text or "BOOK ONE" lettering is in the crop at all — see
+   brand_assets/README.md's confidence notes for the trade-off that cost.
+   Their fades are gone; a clean crop doesn't need one.
+
+   figure-plinth keeps --fade-right: its source crop genuinely can't be
+   tightened further without losing part of the figure (README again).
+   group-onlookers keeps --fade-left-soft as a deliberate vignette, not a
+   crop patch. Fades are a design choice here, applied only where there's
+   a real reason for one — not a default for every figure.
 ------------------------------------------------------------------------- */
 
 .figure {
@@ -204,8 +209,8 @@
    can support. Add a modifier per asset used; extend as new figures are
    brought in. */
 .figure--plinth    { max-width: 285px; }
-.figure--crowned   { max-width: 320px; }
-.figure--ship      { max-width: 305px; }
+.figure--crowned   { max-width: 260px; }
+.figure--ship      { max-width: 235px; }
 .figure--winged    { max-width: 470px; }
 .figure--onlookers { max-width: 865px; }
 

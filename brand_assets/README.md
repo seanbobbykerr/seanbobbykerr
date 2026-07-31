@@ -34,9 +34,9 @@ All files were derived only from the two supplied TIFF artworks. The source file
 | `01_faithful/divider-diamond-chain.png` | `The Burned Name back cover(1).tif` | `0.4277778, 0.5148148, 0.5722222, 0.5425926` | `770, 1390, 1030, 1465` | 260 × 75 | Section divider between website content blocks. |
 | `01_faithful/emblem-compass-cross.png` | `The Burned Name back cover(1).tif` | `0.0038889, 0.0025926, 0.0433333, 0.0288889` | `7, 7, 78, 78` | 71 × 71 | Small square emblem or secondary mark. |
 | `01_faithful/figure-plinth.png` | `The Burned Name back cover(1).tif` | `0.0388889, 0.2074074, 0.3555556, 0.7351852` | `70, 560, 640, 1985` | 570 × 1425 | Feature illustration from the warm/gold half. |
-| `01_faithful/figure-crowned.png` | `The Burned Name back cover(1).tif` | `0.6111111, 0.4148148, 0.9666667, 0.7592593` | `1100, 1120, 1740, 2050` | 640 × 930 | Feature illustration from the cool/blue half. |
-| `01_faithful/motif-ship.png` | `The Burned Name back cover(1).tif` | `0.6166667, 0.0888889, 0.9555556, 0.3370370` | `1110, 240, 1720, 910` | 610 × 670 | Upper-right sailing-ship motif. |
-| `01_faithful/motif-winged.png` | `The Burned Name back cover(1).tif` | `0.2388889, 0.0000000, 0.7611111, 0.1592593` | `430, 0, 1370, 430` | 940 × 430 | Top-centre winged figure motif. |
+| `01_faithful/figure-crowned.png` | `The Burned Name back cover(1).tif` | `0.6777778, 0.4148148, 0.9666667, 0.7592593` | `1220, 1120, 1740, 2050` | 520 × 930 | Feature illustration from the cool/blue half. Re-cropped — see confidence note. |
+| `01_faithful/motif-ship.png` | `The Burned Name back cover(1).tif` | `0.6944444, 0.0888889, 0.9555556, 0.3370370` | `1250, 240, 1720, 910` | 470 × 670 | Upper-right sailing-ship motif. Re-cropped — see confidence note. |
+| `01_faithful/motif-winged.png` | `The Burned Name back cover(1).tif` | `0.2388889, 0.0000000, 0.7611111, 0.1481481` | `430, 0, 1370, 400` | 940 × 400 | Top-centre winged figure motif. Re-cropped — see confidence note. |
 | `01_faithful/group-onlookers.png` | `The Burned Name back cover(1).tif` | `0.0194444, 0.7259259, 0.9805556, 0.9351852` | `35, 1960, 1765, 2525` | 1730 × 565 | Wide lower-page ensemble image. |
 | `01_faithful/texture-parchment.png` | `The Burned Name back cover(1).tif` | `0.3888889, 0.7000000, 0.6500000, 0.7370370` | `700, 1890, 1170, 1990` | 470 × 100 | Text-free central glow texture for sampling or subtle surfaces. |
 
@@ -87,6 +87,28 @@ The SVGs contain only vector paths. They use layered `currentColor` fills with o
 - Swatch image: `02_derived/palette/palette-swatches.png`
 - Machine-readable list: `02_derived/palette/palette.json`
 
+## Contrast-corrected figures (2026-07-31)
+
+Measured against the site's black page ground (`--ground: #000000`), the five back-cover figure illustrations read at wildly inconsistent legibility — mean-luminance WCAG contrast ranged from 2.25:1 (`figure-crowned`) to 7.57:1 (`figure-plinth`, Everett), a roughly fourfold spread in perceived brightness. The two blue-field figures (`figure-crowned`, `motif-ship`) were the worst offenders: their field wash is close enough in luminance to pure black that the illustration read as a dark smudge rather than a picture.
+
+A flat brightness increase doesn't fix this evenly — pushing the whole image brighter blows out the already-pale gold/blue crossover glow before the blue field is legible, and a naive per-channel RGB levels stretch shifts the blue hue toward cyan (measured: dominant colour drifted from a brand-consistent navy toward `#34C7FF`, well outside the palette). The fix instead adjusts the HSL **lightness** channel only, leaving hue and the original shading structure intact, with an input black-point crush so the ink linework stays crisp rather than lifting toward grey along with the field:
+
+```
+magick source.png -colorspace HSL -channel B -level <black%>,<white%> +channel -colorspace sRGB corrected.png
+```
+
+Parameters, chosen per image from its own grayscale histogram (not a single shared value — the blue-field and gold-field images needed materially different treatment) and verified by re-measuring mean-luminance contrast against black afterward:
+
+| Asset | Levels (black%,white%) | Contrast before | Contrast after |
+|---|---:|---:|---:|
+| `figure-crowned` | 13%, 42% | 2.25:1 | 6.58:1 |
+| `motif-ship` | 13%, 48% | 2.41:1 | 7.18:1 |
+| `motif-winged` | 0%, 78% | 4.56:1 | 6.65:1 |
+| `group-onlookers` | 3%, 50% | 2.86:1 | 7.39:1 |
+| `figure-plinth` | unchanged (reference) | 7.57:1 | 7.57:1 |
+
+All five now sit in a 6.6–7.6:1 band instead of 2.25–7.57:1. Corrected masters live in `02_derived/corrected/`, generated from the `01_faithful` crops — `01_faithful` itself stays crop-only per the tier rule. Web exports (`02_derived/web/*.webp`) for these four are generated from the corrected masters, not from `01_faithful` directly. `figure-plinth`'s web exports still come straight from `01_faithful`, unchanged.
+
 ## Web exports
 
 Every core asset has `@1x.webp` and `@2x.webp` versions in `02_derived/web/`. Frame assets use the transparent tier; back-cover assets retain their painted backgrounds. Exact dimensions and byte sizes are in `02_derived/web/web-file-sizes.csv`.
@@ -102,7 +124,7 @@ Every core asset has `@1x.webp` and `@2x.webp` versions in `02_derived/web/`. Fr
 
 ## Confidence and limitations
 
-- **Lowest confidence: `figure-crowned` and `motif-ship`.** Both illustrations overlap the pale text column. A rectangular faithful crop cannot retain the whole artwork without including nearby text.
+- **`figure-crowned`, `motif-ship` and `motif-winged` were re-cropped** to fully exclude neighbouring text (2026-07-31). In the source, the crowned figure's held ship-model and the airship's rigging line both extend further left than the blurb text column's right edge — the two genuinely interleave, so no rectangle can keep the full illustration and exclude the text. Text exclusion won: each crop's boundary sits just clear of the text's measured rightmost (or, for `motif-winged`, topmost) pixel, which trims a sliver of decorative linework — the crowned figure's ship-prop tip and the airship's upper rigging are both slightly shortened at the crop edge. The original wider crops are recoverable from the source TIFF coordinates in git history if the trade-off ever needs revisiting.
 - **`figure-plinth`** retains a narrow trace of neighbouring layout material at the right edge; cropping further would remove part of the figure or plinth.
 - **`edge-top`** is decorative rather than truly periodic. It is usable for short runs, but a long three-repeat test exposes the restart.
 - **The 16 px and 32 px favicons** are too detailed for perfect legibility. The 48, 180 and 512 px versions are stronger.
