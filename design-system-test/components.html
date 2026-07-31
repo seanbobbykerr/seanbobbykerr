@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artwork components — specimen page (not a site page)</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/components.css">
+<style>
+  /* Specimen-only styles for this test page. Not part of the design
+     system — css/components.css is. This just lays the components out
+     so they can be judged at realistic size before any real page uses
+     them. */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: var(--space-lg) var(--gutter) var(--space-3xl);
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-utility);
+  }
+  .intro {
+    font-family: var(--font-utility);
+    font-size: var(--text-small-size);
+    color: var(--ink-quiet);
+    max-width: var(--measure);
+    margin: 0 0 var(--space-2xl);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: var(--text-display-2-size);
+    font-weight: var(--weight-display-2);
+    color: var(--ink);
+    margin: 0 0 var(--space-md);
+  }
+  h2 {
+    font-family: var(--font-utility);
+    font-size: var(--text-label-size);
+    letter-spacing: var(--text-label-tracking);
+    text-transform: uppercase;
+    color: var(--label);
+    font-weight: var(--weight-label);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: var(--space-2xs);
+    margin: var(--space-3xl) 0 var(--space-sm);
+  }
+  .component-note {
+    font-family: var(--font-utility);
+    font-size: var(--text-small-size);
+    color: var(--ink-quiet);
+    max-width: var(--measure);
+    margin: 0 0 var(--space-lg);
+  }
+  .component-note code {
+    font-family: monospace;
+    color: var(--ink);
+  }
+  section { margin-bottom: var(--space-2xl); }
+
+  /* Demo scaffolding: shows every component in a fixed 380px pane next to
+     a fluid desktop pane, so both required widths are visible together. */
+  .demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xl);
+    align-items: flex-start;
+  }
+  .demo-pane {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .demo-pane--mobile { width: 380px; max-width: 100%; }
+  .demo-pane--desktop { flex: 1 1 480px; min-width: 0; }
+  .demo-label {
+    font-family: var(--font-utility);
+    font-size: var(--text-small-size);
+    color: var(--ink-quiet);
+    margin: 0;
+  }
+  .demo-frame {
+    border: 1px dashed var(--rule);
+    padding: var(--space-md);
+  }
+
+  /* Filler copy for the specimen only — not site copy. */
+  .filler-body {
+    font-family: var(--font-body);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    color: var(--ink);
+    margin: 0;
+  }
+  .filler-h3 {
+    font-family: var(--font-body);
+    font-weight: var(--weight-h3);
+    font-size: var(--text-h3-size);
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+  }
+</style>
+</head>
+<body>
+
+<p class="intro">
+  This is an artwork-component specimen page, not a site page — nothing
+  here is a real layout. It exists to check that the components in
+  <code>css/components.css</code> hold up at realistic size, on both a
+  380px pane and a fluid desktop pane, before any real page is built with
+  them. Filler text below is for sizing only, not final copy.
+</p>
+
+<h1>Artwork components</h1>
+
+<!-- ============================================================ -->
+<section>
+  <h2>1. Frame — .frame</h2>
+  <p class="component-note">
+    Corner ornaments (raster, fixed size, capped below their native @2x
+    export) with a plain bronze hairline running the sides — not tiled
+    edge assets, which the brand library itself rates "fair" to "poor"
+    for tiling. Any block of content can sit inside <code>.frame__content</code>.
+  </p>
+  <div class="demo-row">
+    <div class="demo-pane demo-pane--mobile">
+      <p class="demo-label">380px</p>
+      <div class="frame">
+        <img class="frame__corner frame__corner--tl" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-tl@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-tl@1x.webp 1x, ../brand_assets/02_derived/web/corner-tl@2x.webp 2x">
+        <img class="frame__corner frame__corner--tr" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-tr@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-tr@1x.webp 1x, ../brand_assets/02_derived/web/corner-tr@2x.webp 2x">
+        <img class="frame__corner frame__corner--bl" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-bl@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-bl@1x.webp 1x, ../brand_assets/02_derived/web/corner-bl@2x.webp 2x">
+        <img class="frame__corner frame__corner--br" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-br@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-br@1x.webp 1x, ../brand_assets/02_derived/web/corner-br@2x.webp 2x">
+        <div class="frame__content">
+          <p class="filler-h3">The Burned Name</p>
+          <p class="filler-body">Everett Dwyer travels with Rhi and Quillion, carrying a darkness magic that has aged him before his time.</p>
+        </div>
+      </div>
+    </div>
+    <div class="demo-pane demo-pane--desktop">
+      <p class="demo-label">Fluid / desktop</p>
+      <div class="frame">
+        <img class="frame__corner frame__corner--tl" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-tl@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-tl@1x.webp 1x, ../brand_assets/02_derived/web/corner-tl@2x.webp 2x">
+        <img class="frame__corner frame__corner--tr" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-tr@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-tr@1x.webp 1x, ../brand_assets/02_derived/web/corner-tr@2x.webp 2x">
+        <img class="frame__corner frame__corner--bl" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-bl@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-bl@1x.webp 1x, ../brand_assets/02_derived/web/corner-bl@2x.webp 2x">
+        <img class="frame__corner frame__corner--br" alt="" aria-hidden="true"
+             src="../brand_assets/02_derived/web/corner-br@1x.webp"
+             srcset="../brand_assets/02_derived/web/corner-br@1x.webp 1x, ../brand_assets/02_derived/web/corner-br@2x.webp 2x">
+        <div class="frame__content">
+          <p class="filler-h3">The Burned Name</p>
+          <p class="filler-body">Everett Dwyer travels with Rhi and Quillion, carrying a darkness magic that has aged him before his time. The Expatria order has its own reasons for watching him do it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>2. Masthead and foot — .masthead / .site-foot</h2>
+  <p class="component-note">
+    <code>mark-crown</code> as header, <code>mark-foot</code> as its closing
+    counterpart. Both raster, both centred with the artwork's own rail
+    continuing as a plain hairline to the full container width.
+  </p>
+  <div class="demo-row">
+    <div class="demo-pane demo-pane--mobile">
+      <p class="demo-label">380px</p>
+      <div class="demo-frame">
+        <div class="masthead">
+          <img class="masthead__mark" alt="Sean Bobby Kerr"
+               src="../brand_assets/02_derived/web/mark-crown@1x.webp"
+               srcset="../brand_assets/02_derived/web/mark-crown@1x.webp 1x, ../brand_assets/02_derived/web/mark-crown@2x.webp 2x">
+        </div>
+      </div>
+      <div class="demo-frame" style="margin-top: var(--space-md); background: var(--ground-below);">
+        <div class="site-foot">
+          <img class="site-foot__mark" alt=""
+               src="../brand_assets/02_derived/web/mark-foot@1x.webp"
+               srcset="../brand_assets/02_derived/web/mark-foot@1x.webp 1x, ../brand_assets/02_derived/web/mark-foot@2x.webp 2x">
+          <p class="eyebrow site-foot__caption">Sean Bobby Kerr</p>
+        </div>
+      </div>
+    </div>
+    <div class="demo-pane demo-pane--desktop">
+      <p class="demo-label">Fluid / desktop</p>
+      <div class="demo-frame">
+        <div class="masthead">
+          <img class="masthead__mark" alt="Sean Bobby Kerr"
+               src="../brand_assets/02_derived/web/mark-crown@1x.webp"
+               srcset="../brand_assets/02_derived/web/mark-crown@1x.webp 1x, ../brand_assets/02_derived/web/mark-crown@2x.webp 2x">
+        </div>
+      </div>
+      <div class="demo-frame" style="margin-top: var(--space-md); background: var(--ground-below);">
+        <div class="site-foot">
+          <img class="site-foot__mark" alt=""
+               src="../brand_assets/02_derived/web/mark-foot@1x.webp"
+               srcset="../brand_assets/02_derived/web/mark-foot@1x.webp 1x, ../brand_assets/02_derived/web/mark-foot@2x.webp 2x">
+          <p class="eyebrow site-foot__caption">Sean Bobby Kerr</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>3. Diamond-chain divider — .divider</h2>
+  <p class="component-note">
+    Vector, tiled via <code>mask-image</code>, coloured with
+    <code>background-color</code> — scales to any width without the
+    raster resolution ceiling. Three sizes shown at their intended use
+    width, not stretched to the pane.
+  </p>
+  <div class="demo-row">
+    <div class="demo-pane demo-pane--mobile">
+      <p class="demo-label">380px</p>
+      <p class="demo-label">Small — inline / compact break</p>
+      <div class="divider divider--sm"></div>
+      <p class="demo-label" style="margin-top: var(--space-md);">Medium — default section break, matches the text measure</p>
+      <div class="divider divider--md"></div>
+    </div>
+    <div class="demo-pane demo-pane--desktop">
+      <p class="demo-label">Fluid / desktop</p>
+      <p class="demo-label">Medium — default section break</p>
+      <div class="divider divider--md"></div>
+      <p class="demo-label" style="margin-top: var(--space-md);">Large — wide section break</p>
+      <div class="divider divider--lg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>4. Figure treatment — .figure</h2>
+  <p class="component-note">
+    Back-cover illustrations. <code>figure-plinth</code>,
+    <code>figure-crowned</code> and <code>motif-ship</code> carry a sliver
+    of the neighbouring blurb-text column in their source crop (see
+    <code>brand_assets/README.md</code>'s confidence notes) —
+    <code>motif-winged</code> clips into the "BOOK ONE" lettering at its
+    lower edge. A directional fade dissolves each intrusion into the page
+    ground rather than showing it, which also stops the rectangle reading
+    as clip art pasted on black.
+  </p>
+  <div class="demo-row">
+    <div class="demo-pane demo-pane--mobile">
+      <p class="demo-label">380px</p>
+      <figure class="figure figure--plinth figure--fade-right">
+        <img class="figure__image" alt="Everett Dwyer, aged and cloaked, standing on a plinth"
+             src="../brand_assets/02_derived/web/figure-plinth@1x.webp"
+             srcset="../brand_assets/02_derived/web/figure-plinth@1x.webp 1x, ../brand_assets/02_derived/web/figure-plinth@2x.webp 2x">
+        <figcaption class="eyebrow figure__caption">Everett, on the plinth</figcaption>
+      </figure>
+    </div>
+    <div class="demo-pane demo-pane--desktop">
+      <p class="demo-label">Fluid / desktop — all five figures</p>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); align-items: flex-end;">
+        <figure class="figure figure--plinth figure--fade-right">
+          <img class="figure__image" alt="Everett Dwyer, aged and cloaked, standing on a plinth"
+               src="../brand_assets/02_derived/web/figure-plinth@1x.webp"
+               srcset="../brand_assets/02_derived/web/figure-plinth@1x.webp 1x, ../brand_assets/02_derived/web/figure-plinth@2x.webp 2x">
+          <figcaption class="eyebrow figure__caption">Everett, on the plinth</figcaption>
+        </figure>
+        <figure class="figure figure--crowned figure--fade-left">
+          <img class="figure__image" alt="A crowned figure holding a broken ship"
+               src="../brand_assets/02_derived/web/figure-crowned@1x.webp"
+               srcset="../brand_assets/02_derived/web/figure-crowned@1x.webp 1x, ../brand_assets/02_derived/web/figure-crowned@2x.webp 2x">
+          <figcaption class="eyebrow figure__caption">The crowned figure</figcaption>
+        </figure>
+        <figure class="figure figure--ship figure--fade-left">
+          <img class="figure__image" alt="An airship among clouds"
+               src="../brand_assets/02_derived/web/motif-ship@1x.webp"
+               srcset="../brand_assets/02_derived/web/motif-ship@1x.webp 1x, ../brand_assets/02_derived/web/motif-ship@2x.webp 2x">
+          <figcaption class="eyebrow figure__caption">The airship</figcaption>
+        </figure>
+        <figure class="figure figure--winged figure--fade-bottom">
+          <img class="figure__image" alt="A winged eagle figure"
+               src="../brand_assets/02_derived/web/motif-winged@1x.webp"
+               srcset="../brand_assets/02_derived/web/motif-winged@1x.webp 1x, ../brand_assets/02_derived/web/motif-winged@2x.webp 2x">
+          <figcaption class="eyebrow figure__caption">The winged figures</figcaption>
+        </figure>
+      </div>
+      <div style="margin-top: var(--space-lg);">
+        <figure class="figure figure--onlookers figure--fade-left-soft">
+          <img class="figure__image" alt="A row of hooded onlookers"
+               src="../brand_assets/02_derived/web/group-onlookers@1x.webp"
+               srcset="../brand_assets/02_derived/web/group-onlookers@1x.webp 1x, ../brand_assets/02_derived/web/group-onlookers@2x.webp 2x">
+          <figcaption class="eyebrow figure__caption">The hooded onlookers</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>5. Background treatment — .bg-parchment / .bg-divide</h2>
+  <p class="component-note">
+    Two panel surfaces for content blocks — not full-bleed hero grounds.
+    <code>.bg-parchment</code> tiles the parchment glow texture at low
+    opacity over the Parchment token. <code>.bg-divide</code> is a CSS
+    gradient built only from the eight palette tokens, restrained rather
+    than a literal half-gold half-blue split.
+  </p>
+  <div class="demo-row">
+    <div class="demo-pane demo-pane--mobile">
+      <p class="demo-label">380px</p>
+      <div class="bg-parchment" style="padding: var(--space-lg);">
+        <p class="eyebrow" style="margin: 0 0 var(--space-2xs);">Book two</p>
+        <p class="filler-h3">The Scroll of Recall</p>
+      </div>
+      <div class="bg-divide" style="padding: var(--space-lg); margin-top: var(--space-md);">
+        <p class="filler-body" style="color: var(--ink);">A restrained warm glow over a mostly-dark ground.</p>
+      </div>
+    </div>
+    <div class="demo-pane demo-pane--desktop">
+      <p class="demo-label">Fluid / desktop</p>
+      <div class="bg-parchment" style="padding: var(--space-xl);">
+        <p class="eyebrow" style="margin: 0 0 var(--space-2xs);">Book two</p>
+        <p class="filler-h3">The Scroll of Recall</p>
+        <p class="filler-body" style="color: var(--ground);">TODO: Sean's paragraph on book two.</p>
+      </div>
+      <div class="bg-divide" style="padding: var(--space-xl); margin-top: var(--space-md);">
+        <p class="filler-body" style="color: var(--ink);">A restrained warm glow over a mostly-dark ground — the back cover's warm light in a cold room, without spending the gold budget on a full split.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

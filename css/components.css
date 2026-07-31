@@ -1,0 +1,244 @@
+/*
+  Artwork components — seanbobbykerr.com
+  Built from brand_assets/02_derived. Requires css/tokens.css to be loaded
+  first: every value here reads a custom property defined there.
+
+  Five components: .frame, .masthead / .site-foot, .divider, .figure,
+  and the two .bg-* surface treatments. No page layout lives here —
+  see design-system-test/components.html for usage at realistic size.
+*/
+
+/* ---- Shared: eyebrow/caption text -------------------------------------
+   Reused by the masthead, foot and figure captions, so it is defined once.
+------------------------------------------------------------------------- */
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-utility);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-leading);
+  letter-spacing: var(--text-label-tracking);
+  font-weight: var(--weight-label);
+  text-transform: uppercase;
+  color: var(--label);
+}
+
+/* ---- 1. Frame: corner ornaments + hairline sides -----------------------
+   Corners are raster (transparent tier), fixed size, never upscaled past
+   their @2x export. Sides are a CSS hairline, not tiled edge assets —
+   edge-top tiles "poor" and edge-left/right only "fair" per the brand
+   library's own tile tests, so a hairline avoids visible seam restarts
+   at any container height.
+------------------------------------------------------------------------- */
+
+.frame {
+  --frame-corner-size: 56px;
+  position: relative;
+  border: 1px solid var(--rule);
+}
+
+@media (min-width: 1024px) {
+  .frame {
+    --frame-corner-size: 88px;
+  }
+}
+
+.frame__corner {
+  position: absolute;
+  width: var(--frame-corner-size);
+  height: var(--frame-corner-size);
+  display: block;
+}
+
+.frame__corner--tl { top: -1px; left: -1px; }
+.frame__corner--tr { top: -1px; right: -1px; }
+.frame__corner--bl { bottom: -1px; left: -1px; }
+.frame__corner--br { bottom: -1px; right: -1px; }
+
+.frame__content {
+  padding: calc(var(--frame-corner-size) * 0.65 + var(--space-sm))
+           calc(var(--frame-corner-size) * 0.55 + var(--space-sm));
+}
+
+/* ---- 2. Masthead and foot -----------------------------------------------
+   mark-crown as header, mark-foot as its closing counterpart. Both raster,
+   both centred in a bar with the rail continuing to the container's full
+   width as a plain hairline — the artwork's own rail-run is what makes
+   this read as one continuous line rather than a logo floating in a box.
+------------------------------------------------------------------------- */
+
+.masthead {
+  --masthead-height: 56px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+@media (min-width: 1024px) {
+  .masthead { --masthead-height: 96px; }
+}
+
+.masthead::before,
+.masthead::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--rule);
+}
+
+.masthead__mark {
+  flex: 0 0 auto;
+  height: var(--masthead-height);
+  width: auto;
+  max-width: 400px; /* native @1x width — never upscale past it */
+}
+
+.site-foot {
+  --foot-height: 40px;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .site-foot { --foot-height: 64px; }
+}
+
+.site-foot__mark {
+  height: var(--foot-height);
+  width: auto;
+  max-width: 540px; /* native @1x width */
+}
+
+.site-foot__caption {
+  margin: var(--space-xs) 0 0;
+  text-align: center;
+}
+
+/* ---- 3. Diamond-chain divider, three scales -----------------------------
+   Vector, so unlike the raster assets it can tile to any width without
+   hitting the resolution ceiling. Uses mask-image rather than <img> so it
+   recolours with background-color instead of needing currentColor support
+   inside an externally-referenced SVG.
+------------------------------------------------------------------------- */
+
+.divider {
+  --divider-color: var(--rule);
+  display: block;
+  margin: var(--space-lg) auto;
+  background-color: var(--divider-color);
+  -webkit-mask-image: url("../brand_assets/02_derived/svg/divider-diamond-chain.svg");
+  mask-image: url("../brand_assets/02_derived/svg/divider-diamond-chain.svg");
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: auto 100%;
+  mask-size: auto 100%;
+  /* Alpha mode reads the source SVG's own opacity rather than resolving
+     currentColor (which defaults to black in an externally-referenced
+     document) — a deliberate, predictable choice rather than relying on
+     the browser's default match-source behaviour. */
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+}
+
+.divider--sm {
+  width: 8em;
+  height: 10px;
+}
+
+.divider--md {
+  width: min(100%, var(--measure));
+  height: 14px;
+}
+
+.divider--lg {
+  width: min(100%, var(--measure-wide));
+  height: 18px;
+}
+
+/* ---- 4. Figure treatment -------------------------------------------------
+   Back-cover illustrations. Several of the source crops carry a stray
+   sliver of the neighbouring blurb-text column or an adjoining motif —
+   see brand_assets/README.md's confidence notes. Rather than hand-crop
+   guessed boundaries, a directional fade dissolves that edge into the
+   page ground, which also stops the rectangle reading as a pasted-on
+   cutout. Pick the modifier that matches where the intrusion sits.
+------------------------------------------------------------------------- */
+
+.figure {
+  display: block;
+  margin: 0;
+}
+
+.figure__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.figure--fade-right .figure__image {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 58%, transparent 94%);
+  mask-image: linear-gradient(to right, #000 0%, #000 58%, transparent 94%);
+}
+
+.figure--fade-left .figure__image {
+  -webkit-mask-image: linear-gradient(to left, #000 0%, #000 58%, transparent 94%);
+  mask-image: linear-gradient(to left, #000 0%, #000 58%, transparent 94%);
+}
+
+.figure--fade-left-soft .figure__image {
+  -webkit-mask-image: linear-gradient(to left, #000 0%, #000 78%, transparent 98%);
+  mask-image: linear-gradient(to left, #000 0%, #000 78%, transparent 98%);
+}
+
+.figure--fade-bottom .figure__image {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+}
+
+.figure__caption {
+  margin: var(--space-xs) 0 0;
+}
+
+/* Native @1x widths, so a figure never displays larger than its @2x export
+   can support. Add a modifier per asset used; extend as new figures are
+   brought in. */
+.figure--plinth    { max-width: 285px; }
+.figure--crowned   { max-width: 320px; }
+.figure--ship      { max-width: 305px; }
+.figure--winged    { max-width: 470px; }
+.figure--onlookers { max-width: 865px; }
+
+/* ---- 5. Background treatments -------------------------------------------
+   Two panel surfaces, for use behind pull-quotes, cover slots or other
+   content blocks — not full-bleed hero grounds.
+------------------------------------------------------------------------- */
+
+.bg-parchment {
+  background-color: var(--ink);
+  background-image: url("../brand_assets/02_derived/web/texture-parchment@2x.webp");
+  background-repeat: repeat;
+  background-size: 235px 50px;
+  background-blend-mode: multiply;
+  color: var(--ground);
+}
+
+.bg-parchment .eyebrow {
+  color: var(--rule);
+}
+
+/* A restrained warm glow over a mostly-dark ground, built only from the
+   eight palette tokens — the back cover's warm-light-in-a-cool-room
+   feeling, without spending the gold budget the way a literal half-gold
+   half-blue split would. Decorative surface; set body copy in --ink
+   (parchment) on top of it. */
+.bg-divide {
+  background-image: radial-gradient(
+    140% 140% at 18% 20%,
+    var(--ink-quiet) 0%,
+    var(--rule) 22%,
+    var(--surface) 58%,
+    var(--ground) 100%
+  );
+  color: var(--ink);
+}
