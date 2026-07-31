@@ -1,0 +1,82 @@
+[
+  {
+    "label": "Gold highlight",
+    "rgb": [
+      244,
+      176,
+      57
+    ],
+    "hex": "#F4B039",
+    "role": "warm accent / highlight"
+  },
+  {
+    "label": "Gold field",
+    "rgb": [
+      191,
+      140,
+      50
+    ],
+    "hex": "#BF8C32",
+    "role": "primary warm background"
+  },
+  {
+    "label": "Bronze shadow",
+    "rgb": [
+      161,
+      117,
+      41
+    ],
+    "hex": "#A17529",
+    "role": "border / dark warm surface"
+  },
+  {
+    "label": "Blue highlight",
+    "rgb": [
+      45,
+      79,
+      160
+    ],
+    "hex": "#2D4FA0",
+    "role": "cool accent / link highlight"
+  },
+  {
+    "label": "Blue field",
+    "rgb": [
+      47,
+      73,
+      137
+    ],
+    "hex": "#2F4989",
+    "role": "primary cool background"
+  },
+  {
+    "label": "Deep blue",
+    "rgb": [
+      30,
+      44,
+      75
+    ],
+    "hex": "#1E2C4B",
+    "role": "footer / dark surface"
+  },
+  {
+    "label": "Parchment",
+    "rgb": [
+      225,
+      208,
+      177
+    ],
+    "hex": "#E1D0B1",
+    "role": "content surface / panel"
+  },
+  {
+    "label": "Ink black",
+    "rgb": [
+      0,
+      0,
+      0
+    ],
+    "hex": "#000000",
+    "role": "body text / linework"
+  }
+]
