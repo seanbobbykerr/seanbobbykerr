@@ -156,6 +156,16 @@
   height: 18px;
 }
 
+/* Full-bleed — the Divide seam itself (design-direction.md section 4), the
+   only place a divider spans edge to edge rather than sitting inside the
+   container. Same inline-SVG-pattern technique as sm/md/lg, just unbounded
+   by --measure-wide. Every page's seam needs this, so it lives here rather
+   than as a page-specific override. */
+.divider--full {
+  width: 100%;
+  height: 1.25rem;
+}
+
 /* ---- 4. Figure treatment -------------------------------------------------
    Back-cover illustrations. figure-crowned, motif-ship and motif-winged
    were re-cropped tighter to the source TIFF (2026-07-31) so no blurb

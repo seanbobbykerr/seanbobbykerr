@@ -91,14 +91,26 @@ body {
   display: grid;
   /* Cover slot column is 0fr — collapsed, no front cover artwork exists yet
      (design-direction.md section 5). When art arrives: change this to a
-     fixed width (300px, per that section) and remove [hidden] below. */
+     fixed width (300px, per that section) and remove [hidden] below.
+
+     Columns are pinned explicitly rather than left to auto-placement: the
+     cover slot has [hidden] (display: none), which removes it from grid
+     item generation entirely, so an un-pinned .intro-copy would be
+     auto-placed into column 1 (the 0fr track) instead of column 2 — it
+     would render squeezed into whatever narrow width that track resolves
+     to, with the real 1fr column sitting empty beside it. */
   grid-template-columns: 0fr 1fr;
   gap: var(--space-lg);
   align-items: start;
 }
 
 .cover-slot {
+  grid-column: 1;
   aspect-ratio: 2 / 3;
+}
+
+.intro-copy {
+  grid-column: 2;
 }
 
 .placeholder {
