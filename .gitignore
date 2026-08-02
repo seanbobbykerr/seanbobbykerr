@@ -1,8 +1,3 @@
-# Brand asset masters — read-only source material, never served by the site
-brand_assets/source/
-brand_assets/01_faithful/
-brand_assets/contact-sheet.png
-
 # Local Claude Code settings (machine-specific, not shared)
 .claude/settings.local.json
 
