@@ -2313,6 +2313,8 @@ p + p { margin-top: 1.1em; }
 
 .sp-divider { width: 120px; margin: 1.75rem auto; }
 
+.sp-col-primary .sp-cta { margin-top: 1.75rem; }
+
 .sp-heading {
   font-family: var(--font-display);
   font-weight: 500;
@@ -2405,8 +2407,8 @@ p + p { margin-top: 1.1em; }
   }
   .sp-col-primary, .sp-col-features { text-align: left; }
   .sp-col-features, .sp-col-secondary {
-    border-left: 1px solid rgba(194, 139, 44, 0.18);
-    padding-left: 1.5rem;
+    border-left: 1px solid rgba(194, 139, 44, 0.4);
+    padding-left: 1.75rem;
   }
 
   /* Kept compact through the 1024–1279px tablet range, where a three-column
