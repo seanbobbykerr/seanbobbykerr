@@ -2680,7 +2680,7 @@ p + p { margin-top: 1.1em; }
   letter-spacing: 0.03em;
   text-align: center;
   color: var(--umber);
-  margin: var(--space-5) 0 0.4rem;
+  margin: var(--space-5) 0 1.25rem;
 }
 .read-chapter-title:first-child { margin-top: 0; }
 .read-chapter-subtitle {
