@@ -34,6 +34,24 @@ Do not ask me what I want it to look like. I would rather react to something tha
 
 **Say when you are guessing.** If you are unsure whether something works, or you have not tested it, say so rather than presenting it as finished.
 
+## Git & deployment
+
+This repo is connected to `https://github.com/seanbobbykerr/seanbobbykerr.git`, with `main` as the production branch. Pushes to `main` trigger an automatic Vercel deploy of the live site.
+
+**Whenever you complete a website change I requested, automatically commit it and push it to `main`.** Do not ask whether you should commit or push — just do it once the change is done. I want the live site to update without me managing Git by hand. This does not relax "ask before large structural changes" above — check first for big restructures, but once a change (large or small) is actually finished, push it without asking.
+
+Rules for this:
+
+- The current local website is the source of truth. Never overwrite it with an older or emptier version from GitHub.
+- Do not wait for me to review changes locally before pushing.
+- Write a sensible, descriptive commit message based on the change just made.
+- Only commit files that belong to this website project.
+- Keep `.gitignore` current so temp files, caches, local tooling, and anything not meant to be public never get committed.
+- Never commit passwords, private credentials, secret API keys, or other sensitive information.
+- The public Web3Forms client access key already used by the site (in `site-config.js`) is intentionally allowed in frontend code — it is not a secret.
+- If a Git operation fails, fix it if reasonably possible. If you genuinely need something from me (e.g. GitHub authentication), say so plainly rather than working around it.
+- Do not alter the site's design or functionality merely as a side effect of Git/deploy work.
+
 ## Stack
 
 Plain HTML and CSS. No build step, no framework, unless there is a specific reason and you tell me the reason first. Serving the folder or opening the file should be enough to see it.
