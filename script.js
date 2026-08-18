@@ -26,9 +26,9 @@
         el.removeAttribute("aria-disabled");
         el.removeAttribute("data-tooltip");
         el.classList.remove("is-pending");
+        el.setAttribute("aria-label", label);
         if (isNavOrIcon) {
           el.classList.remove("nav-pending");
-          el.setAttribute("aria-label", label);
         }
         var sibling = el.parentElement && el.parentElement.querySelector(".pending-note");
         if (sibling) sibling.hidden = true;
@@ -179,34 +179,48 @@
   }
 
   /* -----------------------------------------------------------------------
-     Free chapter form
-     There is no mailing-list endpoint yet. While SITE_CONFIG.freeChapterEndpoint
-     is blank, the form validates but never pretends to submit successfully.
+     Mailing-list form delivery (Web3Forms)
+     Both the free chapter form and the /subscribe form send their
+     submissions to SITE_CONFIG.web3formsAccessKey's registered inbox via
+     Web3Forms' JSON API — no backend of our own, no secret key (the access
+     key is meant to be public/embeddable; see the comment in site-config.js).
+     While the key is blank, both forms validate but never pretend to have
+     submitted anything.
      ------------------------------------------------------------------- */
+  function submitToMailingList(fields) {
+    var payload = { access_key: CONFIG.web3formsAccessKey };
+    for (var key in fields) {
+      if (Object.prototype.hasOwnProperty.call(fields, key)) payload[key] = fields[key];
+    }
+    return fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        if (!res.ok || !data.success) throw new Error((data && data.message) || "submission-failed");
+        return data;
+      });
+    });
+  }
+
   function initFreeChapterForm() {
     var form = document.getElementById("free-chapter-form");
     if (!form) return;
     var status = document.getElementById("fc-status");
     var emailField = document.getElementById("fc-email");
+    var nameField = document.getElementById("fc-name");
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var submitting = false;
 
     function setStatus(message, isError) {
       status.textContent = message;
       status.classList.toggle("is-error", !!isError);
     }
 
-    // TODO: once SITE_CONFIG.freeChapterEndpoint is set to a real mailing-list
-    // endpoint, this is the only function that needs to change — it should
-    // POST { name, email } to that endpoint and resolve/reject accordingly.
-    function submitFreeChapter(payload) {
-      return fetch(CONFIG.freeChapterEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-    }
-
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (submitting) return;
 
       if (!emailField.value || !emailField.checkValidity()) {
         setStatus("Please enter a valid email address.", true);
@@ -214,21 +228,92 @@
         return;
       }
 
-      if (!CONFIG.freeChapterEndpoint) {
+      if (!CONFIG.web3formsAccessKey) {
         setStatus("Email delivery will be connected before launch.", false);
         return;
       }
 
-      var payload = { name: document.getElementById("fc-name").value, email: emailField.value };
+      var name = nameField.value.trim();
+      var email = emailField.value.trim();
+
+      submitting = true;
+      submitBtn.disabled = true;
       setStatus("Sending…", false);
-      submitFreeChapter(payload)
-        .then(function (res) {
-          if (!res.ok) throw new Error("bad-response");
+
+      submitToMailingList({
+        subject: (name || email) + " wants to join the mailing list!",
+        from_name: "Sean Bobby Kerr Website",
+        name: name,
+        email: email,
+        message: "Name: " + (name || "(not provided)") + "\nEmail: " + email + "\nSource: Homepage Free Chapter Form"
+      })
+        .then(function () {
           setStatus("Chapter on its way — check your inbox.", false);
           form.reset();
         })
         .catch(function () {
           setStatus("Something went wrong. Please try again shortly.", true);
+        })
+        .then(function () {
+          submitting = false;
+          submitBtn.disabled = false;
+        });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     /subscribe page: newsletter form
+     ------------------------------------------------------------------- */
+  function initNewsletterForm() {
+    var form = document.getElementById("newsletter-form");
+    if (!form) return;
+    var status = document.getElementById("nl-status");
+    var emailField = document.getElementById("nl-email");
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var submitting = false;
+
+    function setStatus(message, isError) {
+      status.textContent = message;
+      status.classList.toggle("is-error", !!isError);
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (submitting) return;
+
+      if (!emailField.value || !emailField.checkValidity()) {
+        setStatus("Please enter a valid email address.", true);
+        emailField.focus();
+        return;
+      }
+
+      if (!CONFIG.web3formsAccessKey) {
+        setStatus("Mailing-list delivery will be connected before launch.", false);
+        return;
+      }
+
+      var email = emailField.value.trim();
+
+      submitting = true;
+      submitBtn.disabled = true;
+      setStatus("Sending…", false);
+
+      submitToMailingList({
+        subject: email + " wants to join the mailing list!",
+        from_name: "Sean Bobby Kerr Website",
+        email: email,
+        message: "Name: (not provided)\nEmail: " + email + "\nSource: Subscribe Page"
+      })
+        .then(function () {
+          setStatus("You're on the list — welcome to Gyra.", false);
+          form.reset();
+        })
+        .catch(function () {
+          setStatus("Something went wrong. Please try again shortly.", true);
+        })
+        .then(function () {
+          submitting = false;
+          submitBtn.disabled = false;
         });
     });
   }
@@ -241,6 +326,26 @@
     if (el) el.textContent = String(new Date().getFullYear());
   }
 
+  /* -----------------------------------------------------------------------
+     /support page: platform name + logo
+     The support platform (Patreon today) is named and logo'd in exactly two
+     places in SITE_CONFIG — supportPlatformName and supportPlatformLogo.
+     Every on-page mention of the platform name lives in a
+     [data-support-platform] element and every logo <img> is
+     [data-support-logo], so switching platforms later only means editing
+     those two config values, not the HTML.
+     ------------------------------------------------------------------- */
+  function initSupportPage() {
+    var nameEls = document.querySelectorAll("[data-support-platform]");
+    if (!nameEls.length) return;
+    var name = CONFIG.supportPlatformName || "Patreon";
+    nameEls.forEach(function (el) { el.textContent = name; });
+    document.querySelectorAll("[data-support-logo]").forEach(function (el) {
+      if (CONFIG.supportPlatformLogo) el.src = CONFIG.supportPlatformLogo;
+      el.alt = name;
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     applyConfigLinks();
     initHeader();
@@ -249,6 +354,8 @@
     initMapLightbox();
     initAuthorMore();
     initFreeChapterForm();
+    initNewsletterForm();
     initFooterYear();
+    initSupportPage();
   });
 })();

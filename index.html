@@ -16,9 +16,18 @@
      e.g. <link rel="canonical" href="https://seanbobbykerr.com/"> -->
 <!-- <link rel="canonical" href=""> -->
 
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon-180.png">
-<link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
+<!-- Favicons: the nightjar is wider than it is tall, so every icon below is
+     the bird centred with transparent padding on a square canvas rather
+     than the raw wide artwork forced into a square (which clipped the
+     wingtips). Cache-busted with ?v=2 since browsers cache favicons
+     aggressively by URL and these filenames were reused. -->
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192.png?v=2">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon-180.png?v=2">
+<link rel="manifest" href="site.webmanifest?v=2">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,126 +44,200 @@
     <div class="header-inner">
       <a href="#hero" class="header-emblem" data-nav-link aria-label="Sean Bobby Kerr — return to top">
         <img
-          src="assets/img/nightjar-mark@2x.png"
-          srcset="assets/img/nightjar-mark@1x.png 160w, assets/img/nightjar-mark@2x.png 320w"
-          sizes="44px"
-          width="320" height="320"
+          class="header-emblem-img-desktop"
+          src="assets/img/nightjar-full.png"
+          width="853" height="381"
           alt="">
       </a>
 
-      <a href="#hero" class="header-name" data-nav-link>Sean Bobby Kerr</a>
+      <a href="#hero" class="header-name" data-nav-link>
+        <img class="header-name-img" src="assets/img/sean-bobby-kerr.png" width="2840" height="320" alt="Sean Bobby Kerr">
+      </a>
 
       <div class="header-social" aria-label="Social links">
-        <a class="social-icon" data-config-key="instagramUrl" data-label="Instagram" aria-label="Instagram (link coming soon)">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2c2.7 0 3 0 4.1.06 1 .05 1.6.2 2 .35.5.2.9.4 1.3.8.4.4.6.8.8 1.3.15.4.3 1 .35 2 .05 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.2 1.6-.35 2a3.5 3.5 0 0 1-.8 1.3 3.5 3.5 0 0 1-1.3.8c-.4.15-1 .3-2 .35-1.1.05-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.6-.2-2-.35a3.5 3.5 0 0 1-1.3-.8 3.5 3.5 0 0 1-.8-1.3c-.15-.4-.3-1-.35-2C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1 .2-1.6.35-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.15 1-.3 2-.35C7.8 2.2 8.1 2.2 12 2.2zm0 1.8c-2.66 0-2.97 0-4.02.06-.86.04-1.32.18-1.63.3-.41.16-.7.35-1 .65-.3.3-.49.59-.65 1-.12.31-.26.77-.3 1.63C4.3 8.7 4.3 9 4.3 12s0 3.3.06 4.35c.04.86.18 1.32.3 1.63.16.41.35.7.65 1 .3.3.59.49 1 .65.31.12.77.26 1.63.3C8.7 20 9 20 12 20s3.3 0 4.35-.06c.86-.04 1.32-.18 1.63-.3.41-.16.7-.35 1-.65.3-.3.49-.59.65-1 .12-.31.26-.77.3-1.63.06-1.05.06-1.35.06-4.35s0-3.3-.06-4.35c-.04-.86-.18-1.32-.3-1.63a2.7 2.7 0 0 0-.65-1 2.7 2.7 0 0 0-1-.65c-.31-.12-.77-.26-1.63-.3C15.3 4 15 4 12 4zm0 3.05A4.95 4.95 0 1 1 7.05 12 4.95 4.95 0 0 1 12 7.05zm0 1.8a3.15 3.15 0 1 0 3.15 3.15A3.15 3.15 0 0 0 12 8.85zm5.15-2.02a1.16 1.16 0 1 1-1.16 1.16 1.16 1.16 0 0 1 1.16-1.16z"/></svg>
+        <a class="social-icon" data-config-key="goodreadsUrl" data-label="Goodreads" aria-label="Goodreads (link coming soon)">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><mask id="gr-mask-header"><image href="assets/img/goodreads-mark-white.png" width="24" height="24"/></mask><rect width="24" height="24" fill="currentColor" mask="url(#gr-mask-header)"/></svg>
         </a>
         <a class="social-icon" data-config-key="tiktokUrl" data-label="TikTok" aria-label="TikTok (link coming soon)">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.06-2.78V9.16a6.1 6.1 0 1 0 5.26 6.04V8.62a7.6 7.6 0 0 0 4.4 1.4V6.8a4.3 4.3 0 0 1-4.4-4.4z"/></svg>
         </a>
-        <a class="social-icon" data-config-key="goodreadsUrl" data-label="Goodreads" aria-label="Goodreads (link coming soon)">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 3.6a2.9 2.9 0 1 1-2.9 2.9A2.9 2.9 0 0 1 12 5.6zm-4.6 12c.4-2.6 2.4-4.1 4.6-4.1s4.2 1.5 4.6 4.1a7.5 7.5 0 0 1-9.2 0z"/></svg>
+        <a class="social-icon" data-config-key="instagramUrl" data-label="Instagram" aria-label="Instagram (link coming soon)">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2c2.7 0 3 0 4.1.06 1 .05 1.6.2 2 .35.5.2.9.4 1.3.8.4.4.6.8.8 1.3.15.4.3 1 .35 2 .05 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.2 1.6-.35 2a3.5 3.5 0 0 1-.8 1.3 3.5 3.5 0 0 1-1.3.8c-.4.15-1 .3-2 .35-1.1.05-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.6-.2-2-.35a3.5 3.5 0 0 1-1.3-.8 3.5 3.5 0 0 1-.8-1.3c-.15-.4-.3-1-.35-2C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1 .2-1.6.35-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.15 1-.3 2-.35C7.8 2.2 8.1 2.2 12 2.2zm0 1.8c-2.66 0-2.97 0-4.02.06-.86.04-1.32.18-1.63.3-.41.16-.7.35-1 .65-.3.3-.49.59-.65 1-.12.31-.26.77-.3 1.63C4.3 8.7 4.3 9 4.3 12s0 3.3.06 4.35c.04.86.18 1.32.3 1.63.16.41.35.7.65 1 .3.3.59.49 1 .65.31.12.77.26 1.63.3C8.7 20 9 20 12 20s3.3 0 4.35-.06c.86-.04 1.32-.18 1.63-.3.41-.16.7-.35 1-.65.3-.3.49-.59.65-1 .12-.31.26-.77.3-1.63.06-1.05.06-1.35.06-4.35s0-3.3-.06-4.35c-.04-.86-.18-1.32-.3-1.63a2.7 2.7 0 0 0-.65-1 2.7 2.7 0 0 0-1-.65c-.31-.12-.77-.26-1.63-.3C15.3 4 15 4 12 4zm0 3.05A4.95 4.95 0 1 1 7.05 12 4.95 4.95 0 0 1 12 7.05zm0 1.8a3.15 3.15 0 1 0 3.15 3.15A3.15 3.15 0 0 0 12 8.85zm5.15-2.02a1.16 1.16 0 1 1-1.16 1.16 1.16 1.16 0 0 1 1.16-1.16z"/></svg>
         </a>
       </div>
 
       <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
         <span class="menu-toggle-bars" aria-hidden="true"></span>
-        <span class="menu-toggle-label">Menu</span>
+        <span class="menu-toggle-label visually-hidden">Menu</span>
       </button>
     </div>
   </div>
 
   <nav class="header-nav" id="primary-nav" aria-label="Primary">
+   <div class="header-nav-panel">
     <ul>
-      <li><a href="#hero" data-nav-link>Home</a></li>
-      <li><a href="#book-one" data-nav-link>Books</a></li>
-      <li><a class="nav-pending" data-config-key="reviewUrl" data-label="Review" aria-label="Review (link coming soon)">Review</a></li>
-      <li><a class="nav-pending" data-config-key="supportUrl" data-label="Support" aria-label="Support (link coming soon)">Support</a></li>
-      <li><a href="#author" data-nav-link>About</a></li>
-      <li><a href="#subscribe" data-nav-link>Subscribe</a></li>
+      <li><a href="#hero" data-nav-link><span class="nav-spark" aria-hidden="true">&#10022;</span> Home <span class="nav-chevron" aria-hidden="true">&rsaquo;</span></a></li>
+      <li><a href="/books" data-nav-link><span class="nav-spark" aria-hidden="true">&#10022;</span> Books <span class="nav-chevron" aria-hidden="true">&rsaquo;</span></a></li>
+      <li><a href="/reviews" data-nav-link><span class="nav-spark" aria-hidden="true">&#10022;</span> Review <span class="nav-chevron" aria-hidden="true">&rsaquo;</span></a></li>
+      <li><a href="/support" data-nav-link><span class="nav-spark" aria-hidden="true">&#10022;</span> Support <span class="nav-chevron" aria-hidden="true">&rsaquo;</span></a></li>
+      <li><a href="/about" data-nav-link><span class="nav-spark" aria-hidden="true">&#10022;</span> About <span class="nav-chevron" aria-hidden="true">&rsaquo;</span></a></li>
+      <li><a href="/subscribe" data-nav-link><span class="nav-spark" aria-hidden="true">&#10022;</span> Subscribe <span class="nav-chevron" aria-hidden="true">&rsaquo;</span></a></li>
     </ul>
+
+    <div class="header-nav-social" aria-label="Social links">
+      <a class="social-icon" data-config-key="goodreadsUrl" data-label="Goodreads" aria-label="Goodreads (link coming soon)">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><mask id="gr-mask-nav"><image href="assets/img/goodreads-mark-white.png" width="24" height="24"/></mask><rect width="24" height="24" fill="currentColor" mask="url(#gr-mask-nav)"/></svg>
+        <span>Profile</span>
+      </a>
+      <a class="social-icon" data-config-key="tiktokUrl" data-label="TikTok" aria-label="TikTok (link coming soon)">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.06-2.78V9.16a6.1 6.1 0 1 0 5.26 6.04V8.62a7.6 7.6 0 0 0 4.4 1.4V6.8a4.3 4.3 0 0 1-4.4-4.4z"/></svg>
+        <span>TikTok</span>
+      </a>
+      <a class="social-icon" data-config-key="instagramUrl" data-label="Instagram" aria-label="Instagram (link coming soon)">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2c2.7 0 3 0 4.1.06 1 .05 1.6.2 2 .35.5.2.9.4 1.3.8.4.4.6.8.8 1.3.15.4.3 1 .35 2 .05 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.2 1.6-.35 2a3.5 3.5 0 0 1-.8 1.3 3.5 3.5 0 0 1-1.3.8c-.4.15-1 .3-2 .35-1.1.05-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.6-.2-2-.35a3.5 3.5 0 0 1-1.3-.8 3.5 3.5 0 0 1-.8-1.3c-.15-.4-.3-1-.35-2C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1 .2-1.6.35-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.15 1-.3 2-.35C7.8 2.2 8.1 2.2 12 2.2zm0 1.8c-2.66 0-2.97 0-4.02.06-.86.04-1.32.18-1.63.3-.41.16-.7.35-1 .65-.3.3-.49.59-.65 1-.12.31-.26.77-.3 1.63C4.3 8.7 4.3 9 4.3 12s0 3.3.06 4.35c.04.86.18 1.32.3 1.63.16.41.35.7.65 1 .3.3.59.49 1 .65.31.12.77.26 1.63.3C8.7 20 9 20 12 20s3.3 0 4.35-.06c.86-.04 1.32-.18 1.63-.3.41-.16.7-.35 1-.65.3-.3.49-.59.65-1 .12-.31.26-.77.3-1.63.06-1.05.06-1.35.06-4.35s0-3.3-.06-4.35c-.04-.86-.18-1.32-.3-1.63a2.7 2.7 0 0 0-.65-1 2.7 2.7 0 0 0-1-.65c-.31-.12-.77-.26-1.63-.3C15.3 4 15 4 12 4zm0 3.05A4.95 4.95 0 1 1 7.05 12 4.95 4.95 0 0 1 12 7.05zm0 1.8a3.15 3.15 0 1 0 3.15 3.15A3.15 3.15 0 0 0 12 8.85zm5.15-2.02a1.16 1.16 0 1 1-1.16 1.16 1.16 1.16 0 0 1 1.16-1.16z"/></svg>
+        <span>Instagram</span>
+      </a>
+    </div>
+   </div>
   </nav>
 </header>
 
 <main>
 
   <!-- ============================= HERO ============================= -->
-  <section id="hero" class="hero" aria-label="Introduction">
-    <div class="hero-inner">
-
-      <div class="hero-primary">
-        <p class="eyebrow">The Maelum Trilogy</p>
-        <h1 class="hero-line">Old-school fantasy<br>with modern pace</h1>
-
-        <div class="hero-cover-stage" data-reveal>
-          <img
-            class="hero-cover"
-            src="assets/img/cover-book1@2x.jpg"
-            srcset="assets/img/cover-book1@1x.jpg 450w, assets/img/cover-book1@2x.jpg 900w"
-            sizes="(max-width: 640px) 62vw, (max-width: 1024px) 38vw, 420px"
-            width="900" height="1350"
-            fetchpriority="high"
-            alt="The Burned Name, Book One of the Maelum Trilogy. Cover art: Everett Dwyer stands atop a stone monument beneath a sky split between gold and storm-blue, a ghostly statue and a sail-ship behind him, five blindfolded figures kneeling below.">
-        </div>
-
-        <div class="hero-book-heading">
-          <p class="hero-kicker">Book One</p>
-          <h2 class="hero-book-title">The Burned Name</h2>
-          <p class="hero-book-sub">Book One of The Maelum Trilogy</p>
-        </div>
-
-        <div class="cta-block">
-          <a class="btn btn-primary" data-config-key="bookOnePurchaseUrl" data-note="Available soon">Buy The Burned Name</a>
-          <p class="pending-note">Available soon</p>
-        </div>
+  <div id="hero" class="section-slot">
+  <section class="hero" aria-label="The Burned Name, Book One of the Maelum Trilogy">
+    <div class="mobile-hero-frame">
+      <img
+        class="mobile-hero-img"
+        src="assets/img/mobile-hero-book-map.jpg"
+        width="1080" height="2280"
+        fetchpriority="high"
+        alt="The Burned Name laid open across the Lullaby Map of Gyra, its cover showing Everett beneath a sky split between gold and storm-blue.">
+      <div class="mobile-hero-copy">
+        <h1 class="mobile-hero-line">In a world where<br>Religion has been<br>burned from history&hellip;</h1>
+        <p class="mobile-hero-eyebrow">Book One <span aria-hidden="true">&bull;</span> The Maelum Trilogy</p>
+        <a class="mobile-hero-cta" data-config-key="bookOnePurchaseUrl">Buy The Burned Name</a>
       </div>
-
-      <aside class="hero-secondary" aria-label="Book Two preview" data-reveal>
-        <p class="hero-secondary-lede">Already followed Everett this far?</p>
-        <div class="book2-panel">
-          <p class="book2-eyebrow">Book Two</p>
-          <p class="book2-title">The Scroll of<br>Recall</p>
-          <p class="book2-sub">Book Two of The Maelum Trilogy</p>
-          <p class="book2-reveal">Cover reveal to come</p>
-        </div>
-        <div class="cta-block cta-block-secondary">
-          <a class="btn btn-secondary" data-config-key="bookTwoPreorderUrl" data-note="Preorder link coming soon">Preorder Book Two</a>
-          <p class="pending-note">Preorder link coming soon</p>
-        </div>
-      </aside>
-
-    </div>
-
-    <div class="scene-break" aria-hidden="true">
-      <img src="assets/img/nightjar-watermark.png" width="700" height="313" alt="" loading="lazy">
     </div>
   </section>
 
+  <!-- =================== EPIC BOOK-ON-MAP HERO (desktop) =================== -->
+  <section class="hero-map" aria-label="The Burned Name, Book One of the Maelum Trilogy">
+    <div class="hero-map-frame">
+      <img
+        class="hero-map-img"
+        src="assets/img/hero-book-map.jpg"
+        width="2560" height="1440"
+        fetchpriority="high"
+        alt="The Burned Name laid open across the Lullaby Map of Gyra, its cover showing Everett beneath a sky split between gold and storm-blue.">
+      <div class="hero-map-copy">
+        <p class="hero-map-eyebrow">Book One <span aria-hidden="true">&bull;</span> The Maelum Trilogy</p>
+        <h1 class="hero-map-line">In a world where<br>Religion has been<br>burned from history&hellip;</h1>
+        <a class="hero-map-cta" data-config-key="bookOnePurchaseUrl">Buy The Burned Name</a>
+      </div>
+    </div>
+  </section>
+  </div>
+
   <!-- ========================= THE BURNED NAME ========================= -->
-  <section id="book-one" class="burned-name">
-    <div class="burned-name-inner">
-      <div class="burned-name-art" data-reveal>
+  <div id="book-one" class="section-slot">
+  <section class="burned-name" aria-label="The Burned Name">
+    <div class="mobile-blurb-card">
+      <div class="mobile-blurb-art">
         <img
           src="assets/img/everett@2x.png"
           width="541" height="1027"
           loading="lazy"
           alt="Everett Dwyer, rendered in gold linework against a bare field, ragged cloak and travel-worn boots.">
       </div>
-      <div class="burned-name-copy" data-reveal>
-        <p class="section-label">Book One of The Maelum Trilogy</p>
-        <h2 class="section-heading">The Burned Name</h2>
+      <div class="blurb-copy">
+        <p class="blurb-eyebrow">Book One of<br>The Maelum Trilogy</p>
 
         <p>When an eyeless family staggers out of Wulsvil Forest, Everett Dwyer assumes a wild beast took their eyes. He soon learns a worse truth: they blinded themselves to escape something coming. Something they will not name.</p>
 
         <p>The only clue is a dead word. It survives in the town&rsquo;s old black ledger, yet no one can tell Everett what it means. It belongs to no language. It has no history. It is as though the world agreed, all at once, to forget.</p>
 
-        <p class="scorched-line"><span class="scorched-lead">That word is</span><span class="scorched-word">Religion.</span></p>
+        <p class="blurb-scorched"><em>That word is</em> <span class="blurb-religion">Religion.</span></p>
 
         <p>The answer to what is coming lies in the word the world destroyed. Everett must recover its meaning before the Expatria burn him with it.</p>
 
         <div class="cta-block">
-          <a class="btn btn-primary" data-config-key="bookOnePurchaseUrl" data-note="Available soon">Buy The Burned Name</a>
-          <p class="pending-note">Available soon</p>
+          <a class="ornate-btn" data-config-key="bookOnePurchaseUrl">Buy The Burned Name <span aria-hidden="true">&rarr;</span></a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BLURB SECTION (desktop) ===================== -->
+  <section class="blurb-desktop" aria-label="The Burned Name">
+    <div class="blurb-inner">
+      <div class="blurb-art">
+        <img src="assets/img/everett@2x.png" width="541" height="1027" loading="lazy" alt="Everett Dwyer, rendered in gold linework against a bare field, ragged cloak and travel-worn boots.">
+      </div>
+      <div class="blurb-copy">
+        <p class="blurb-eyebrow">Book One of The Maelum Trilogy</p>
+
+        <p>When an eyeless family staggers out of Wulsvil Forest, Everett Dwyer assumes a wild beast took their eyes. He soon learns a worse truth: they blinded themselves to escape something coming. Something they will not name.</p>
+
+        <p>The only clue is a dead word. It survives in the town&rsquo;s old black ledger, yet no one can tell Everett what it means. It belongs to no language. It has no history. It is as though the world agreed, all at once, to forget.</p>
+
+        <p class="blurb-scorched"><em>That word is</em> <span class="blurb-religion">Religion.</span></p>
+
+        <p>The answer to what is coming lies in the word the world destroyed. Everett must recover its meaning before the Expatria burn him with it.</p>
+
+        <div class="cta-block">
+          <a class="ornate-btn" data-config-key="bookOnePurchaseUrl">Buy The Burned Name <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <!-- ========================= THREE READER REVIEWS (desktop) ========================= -->
+  <section class="reviews-desktop" aria-label="Reader reviews">
+    <div class="reviews-inner">
+      <div class="reviews-ornament" aria-hidden="true"><span>&#10022;</span></div>
+      <p class="reviews-eyebrow">Across the World</p>
+      <h2 class="reviews-heading">What readers are saying</h2>
+      <p class="reviews-sub">old school epic fantasy with modern pacing</p>
+
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="review-head">
+            <span class="review-avatar-frame"><img class="review-avatar" src="assets/img/jess.jpg" width="400" height="400" loading="lazy" alt="Jess"></span>
+            <div class="review-id">
+              <p class="review-name">Jess</p>
+              <p class="review-handle">@between.two.bookends</p>
+              <p class="review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            </div>
+          </div>
+          <p class="review-quote">&ldquo;A sweeping, epic fantasy, with a little romance, that had me smiling, laughing aloud and, on a few occasions, crying. The magic system has so much potential.&rdquo;</p>
+        </article>
+
+        <article class="review-card">
+          <div class="review-head">
+            <span class="review-avatar-frame"><img class="review-avatar review-avatar-crystal" src="assets/img/crystal.jpg" width="800" height="800" loading="lazy" alt="Crystal"></span>
+            <div class="review-id">
+              <p class="review-name">Crystal</p>
+              <p class="review-handle">@crystalsbookishlife</p>
+              <p class="review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            </div>
+          </div>
+          <p class="review-quote">&ldquo;Belongs in every fantasy reader&rsquo;s library. You can&rsquo;t help but keep turning pages to find out what&rsquo;s going to happen to these dear characters. The prose is beautiful and highly consumable.&rdquo;</p>
+        </article>
+
+        <article class="review-card">
+          <div class="review-head">
+            <span class="review-avatar-frame"><img class="review-avatar review-avatar-denver" src="assets/img/denver.jpg" width="800" height="800" loading="lazy" alt="Denver Cole Binion"></span>
+            <div class="review-id">
+              <p class="review-name">Denver Cole Binion</p>
+              <p class="review-handle">@denvercolebinion <span class="review-credential-sep" aria-hidden="true">&middot;</span> <span class="review-credential">author of the Sun Wolves series</span></p>
+              <p class="review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+            </div>
+          </div>
+          <p class="review-quote">&ldquo;A riveting and distinctly, wonderfully human tale. This is, simply put, an astonishing debut novel from an immensely talented indie author. I feel part of something truly special.&rdquo;</p>
+        </article>
       </div>
     </div>
   </section>
@@ -233,8 +316,7 @@
           <p class="choice-kicker">Start the Trilogy</p>
           <h3 class="choice-title">Buy The Burned Name</h3>
           <div class="cta-block">
-            <a class="btn btn-primary" data-config-key="bookOnePurchaseUrl" data-note="Available soon">Buy The Burned Name</a>
-            <p class="pending-note">Available soon</p>
+            <a class="ornate-btn" data-config-key="bookOnePurchaseUrl">Buy The Burned Name</a>
           </div>
         </article>
 
@@ -261,8 +343,7 @@
           <p class="choice-kicker">Continue the Journey</p>
           <h3 class="choice-title">Preorder The Scroll of Recall</h3>
           <div class="cta-block">
-            <a class="btn btn-primary" data-config-key="bookTwoPreorderUrl" data-note="Preorder link coming soon">Preorder The Scroll of Recall</a>
-            <p class="pending-note">Preorder link coming soon</p>
+            <a class="btn btn-primary" data-config-key="bookTwoPreorderUrl">Preorder The Scroll of Recall</a>
           </div>
         </article>
       </div>
@@ -282,27 +363,29 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <a href="#hero" class="footer-emblem" data-nav-link aria-label="Sean Bobby Kerr — return to top">
-      <img src="assets/img/nightjar-mark@1x.png" width="160" height="160" loading="lazy" alt="">
+      <img class="footer-emblem-img-desktop" src="assets/img/nightjar-full.png" width="853" height="381" loading="lazy" alt="">
     </a>
-    <p class="footer-name">Sean Bobby Kerr</p>
+    <img class="footer-name-img" src="assets/img/sean-bobby-kerr.png" width="2840" height="320" loading="lazy" alt="Sean Bobby Kerr">
     <p class="footer-series">The Maelum Trilogy</p>
 
     <nav class="footer-nav" aria-label="Footer">
       <a href="#hero" data-nav-link>Home</a>
-      <a href="#book-one" data-nav-link>Books</a>
-      <a href="#author" data-nav-link>About</a>
-      <a href="#subscribe" data-nav-link>Subscribe</a>
+      <a href="/books" data-nav-link>Books</a>
+      <a href="/reviews" data-nav-link>Review</a>
+      <a href="/support" data-nav-link>Support</a>
+      <a href="/about" data-nav-link>About</a>
+      <a href="/subscribe" data-nav-link>Subscribe</a>
     </nav>
 
     <div class="footer-social" aria-label="Social links">
-      <a class="social-icon" data-config-key="instagramUrl" data-label="Instagram" aria-label="Instagram (link coming soon)">
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2c2.7 0 3 0 4.1.06 1 .05 1.6.2 2 .35.5.2.9.4 1.3.8.4.4.6.8.8 1.3.15.4.3 1 .35 2 .05 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.2 1.6-.35 2a3.5 3.5 0 0 1-.8 1.3 3.5 3.5 0 0 1-1.3.8c-.4.15-1 .3-2 .35-1.1.05-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.6-.2-2-.35a3.5 3.5 0 0 1-1.3-.8 3.5 3.5 0 0 1-.8-1.3c-.15-.4-.3-1-.35-2C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1 .2-1.6.35-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.15 1-.3 2-.35C7.8 2.2 8.1 2.2 12 2.2zm0 1.8c-2.66 0-2.97 0-4.02.06-.86.04-1.32.18-1.63.3-.41.16-.7.35-1 .65-.3.3-.49.59-.65 1-.12.31-.26.77-.3 1.63C4.3 8.7 4.3 9 4.3 12s0 3.3.06 4.35c.04.86.18 1.32.3 1.63.16.41.35.7.65 1 .3.3.59.49 1 .65.31.12.77.26 1.63.3C8.7 20 9 20 12 20s3.3 0 4.35-.06c.86-.04 1.32-.18 1.63-.3.41-.16.7-.35 1-.65.3-.3.49-.59.65-1 .12-.31.26-.77.3-1.63.06-1.05.06-1.35.06-4.35s0-3.3-.06-4.35c-.04-.86-.18-1.32-.3-1.63a2.7 2.7 0 0 0-.65-1 2.7 2.7 0 0 0-1-.65c-.31-.12-.77-.26-1.63-.3C15.3 4 15 4 12 4zm0 3.05A4.95 4.95 0 1 1 7.05 12 4.95 4.95 0 0 1 12 7.05zm0 1.8a3.15 3.15 0 1 0 3.15 3.15A3.15 3.15 0 0 0 12 8.85zm5.15-2.02a1.16 1.16 0 1 1-1.16 1.16 1.16 1.16 0 0 1 1.16-1.16z"/></svg>
+      <a class="social-icon" data-config-key="goodreadsUrl" data-label="Goodreads" aria-label="Goodreads (link coming soon)">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><mask id="gr-mask-footer"><image href="assets/img/goodreads-mark-white.png" width="24" height="24"/></mask><rect width="24" height="24" fill="currentColor" mask="url(#gr-mask-footer)"/></svg>
       </a>
       <a class="social-icon" data-config-key="tiktokUrl" data-label="TikTok" aria-label="TikTok (link coming soon)">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.06-2.78V9.16a6.1 6.1 0 1 0 5.26 6.04V8.62a7.6 7.6 0 0 0 4.4 1.4V6.8a4.3 4.3 0 0 1-4.4-4.4z"/></svg>
       </a>
-      <a class="social-icon" data-config-key="goodreadsUrl" data-label="Goodreads" aria-label="Goodreads (link coming soon)">
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 3.6a2.9 2.9 0 1 1-2.9 2.9A2.9 2.9 0 0 1 12 5.6zm-4.6 12c.4-2.6 2.4-4.1 4.6-4.1s4.2 1.5 4.6 4.1a7.5 7.5 0 0 1-9.2 0z"/></svg>
+      <a class="social-icon" data-config-key="instagramUrl" data-label="Instagram" aria-label="Instagram (link coming soon)">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2c2.7 0 3 0 4.1.06 1 .05 1.6.2 2 .35.5.2.9.4 1.3.8.4.4.6.8.8 1.3.15.4.3 1 .35 2 .05 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1-.2 1.6-.35 2a3.5 3.5 0 0 1-.8 1.3 3.5 3.5 0 0 1-1.3.8c-.4.15-1 .3-2 .35-1.1.05-1.4.06-4.1.06s-3 0-4.1-.06c-1-.05-1.6-.2-2-.35a3.5 3.5 0 0 1-1.3-.8 3.5 3.5 0 0 1-.8-1.3c-.15-.4-.3-1-.35-2C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1 .2-1.6.35-2 .2-.5.4-.9.8-1.3.4-.4.8-.6 1.3-.8.4-.15 1-.3 2-.35C7.8 2.2 8.1 2.2 12 2.2zm0 1.8c-2.66 0-2.97 0-4.02.06-.86.04-1.32.18-1.63.3-.41.16-.7.35-1 .65-.3.3-.49.59-.65 1-.12.31-.26.77-.3 1.63C4.3 8.7 4.3 9 4.3 12s0 3.3.06 4.35c.04.86.18 1.32.3 1.63.16.41.35.7.65 1 .3.3.59.49 1 .65.31.12.77.26 1.63.3C8.7 20 9 20 12 20s3.3 0 4.35-.06c.86-.04 1.32-.18 1.63-.3.41-.16.7-.35 1-.65.3-.3.49-.59.65-1 .12-.31.26-.77.3-1.63.06-1.05.06-1.35.06-4.35s0-3.3-.06-4.35c-.04-.86-.18-1.32-.3-1.63a2.7 2.7 0 0 0-.65-1 2.7 2.7 0 0 0-1-.65c-.31-.12-.77-.26-1.63-.3C15.3 4 15 4 12 4zm0 3.05A4.95 4.95 0 1 1 7.05 12 4.95 4.95 0 0 1 12 7.05zm0 1.8a3.15 3.15 0 1 0 3.15 3.15A3.15 3.15 0 0 0 12 8.85zm5.15-2.02a1.16 1.16 0 1 1-1.16 1.16 1.16 1.16 0 0 1 1.16-1.16z"/></svg>
       </a>
     </div>
 
