@@ -9,3 +9,8 @@
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Design source files — large Photoshop originals, not deployment assets.
+# Exported web-ready PNG/JPG/WebP versions belong in brand_assets/ or
+# assets/img/ instead; keep the .psd itself outside the repo.
+*.psd
