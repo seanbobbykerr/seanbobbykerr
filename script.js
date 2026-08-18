@@ -265,6 +265,29 @@
   }
 
   /* -----------------------------------------------------------------------
+     /read page: thin reading-progress bar across the top of the screen
+     ------------------------------------------------------------------- */
+  function initReadProgress() {
+    var bar = document.getElementById("read-progress-bar");
+    if (!bar) return;
+    var ticking = false;
+    function update() {
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      bar.style.width = Math.min(100, Math.max(0, pct)) + "%";
+      ticking = false;
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+  }
+
+  /* -----------------------------------------------------------------------
      Footer year
      ------------------------------------------------------------------- */
   function initFooterYear() {
@@ -299,6 +322,7 @@
     initReveals();
     initFreeChapterForm();
     initNewsletterForm();
+    initReadProgress();
     initFooterYear();
     initSupportPage();
   });

@@ -2234,7 +2234,7 @@ p + p { margin-top: 1.1em; }
     max-width: 1320px;
   }
   .sp-col-primary, .sp-col-features { text-align: left; }
-  .sp-col-primary .sp-heading { text-align: center; }
+  .sp-col-primary .sp-heading, .sp-col-features .sp-heading { text-align: center; }
   .sp-col-features, .sp-col-secondary {
     border-left: 2px solid rgba(224, 172, 72, 0.75);
     padding-left: 1.75rem;
@@ -2410,7 +2410,7 @@ p + p { margin-top: 1.1em; }
   }
   .ab-bio-col-last { grid-column: auto; max-width: none; margin: 0; }
   .ab-bio-col:not(:first-child) {
-    border-left: 1px solid rgba(194, 139, 44, 0.18);
+    border-left: 2px solid rgba(224, 172, 72, 0.75);
     padding-left: 1.75rem;
   }
   .ab-heading { font-size: 1.3rem; }
@@ -2598,6 +2598,131 @@ p + p { margin-top: 1.1em; }
   .sb-emblem { height: 130px; }
   .sb-benefits { flex-direction: row; align-items: stretch; }
   .sb-benefit { flex: 1; }
+}
+
+/* ==========================================================================
+   Read Page (/read)
+   Deliberately plain: a light "book page" reading surface (default body
+   ivory/ink, not the dark navy sections used elsewhere), no hero imagery,
+   one continuous scroll through Prologue + Chapter One. Mobile and desktop
+   share the same single-column layout — prose doesn't need a breakpoint
+   rebuild the way image-driven sections do.
+   ========================================================================== */
+
+.read-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 300;
+  background: transparent;
+  pointer-events: none;
+}
+.read-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--amber);
+}
+
+.read-hero {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-3) var(--space-4);
+  text-align: center;
+}
+.read-hero-eyebrow {
+  font-family: var(--font-display-sc);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--amber-deep);
+  margin: 0 0 0.3rem;
+}
+.read-hero-book {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--bronze);
+  margin: 0 0 var(--space-3);
+}
+.read-hero-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 1.7rem + 2vw, 2.8rem);
+  color: var(--umber);
+  margin: 0 0 0.5rem;
+}
+.read-hero-chapters {
+  font-family: var(--font-display-sc);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--bronze);
+  margin: 0 0 var(--space-3);
+}
+.read-hero-note {
+  font-size: 0.9rem;
+  color: rgba(24, 19, 15, 0.6);
+  margin: 0;
+}
+
+.read-article {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 var(--space-3) var(--space-5);
+}
+.read-article p {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.read-chapter-title {
+  font-family: var(--font-display-sc);
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+  color: var(--umber);
+  margin: var(--space-5) 0 0.4rem;
+}
+.read-chapter-title:first-child { margin-top: 0; }
+.read-chapter-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  text-align: center;
+  color: var(--bronze);
+  margin: 0 0 var(--space-4);
+}
+.read-verse {
+  font-style: italic;
+  margin: var(--space-3) 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--line);
+  color: var(--umber);
+}
+.read-scene-break {
+  text-align: center;
+  color: var(--amber);
+  font-size: 1.1rem;
+  margin: var(--space-4) 0 !important;
+}
+
+.read-endnote {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3) var(--space-6);
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+.read-endnote-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--umber);
+  margin: 0 0 var(--space-3);
+}
+
+@media (min-width: 700px) {
+  .read-hero-title { margin-bottom: 0.6rem; }
+  .read-article p { font-size: 1.12rem; }
 }
 
 /* ==========================================================================
