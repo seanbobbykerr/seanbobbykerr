@@ -1,11 +1,22 @@
 // ---------------------------------------------------------------------------
-// SITE CONFIG — the only file that should need editing when a real link goes live.
+// SITE CONFIG
 //
-// Every button and social icon on the page reads its URL from here. Leave a
-// value as an empty string "" to keep the control visible in its pending
-// state (label shown, but not clickable, with a "coming soon" note).
-// Fill in a URL and the same element becomes a working link automatically —
-// no HTML or CSS changes required.
+// Every button and social icon on the page reads its URL from here at
+// runtime via [data-config-key], as a fallback/sync layer. But because
+// search-engine crawlers and no-JS visitors need a real crawlable href
+// already present in the served HTML (not one added by JavaScript after
+// load), every link listed below is ALSO hardcoded as a static href
+// directly in each page's HTML. That means changing a URL here is no
+// longer enough on its own — you (or Claude) also need to update the
+// matching href="..." in every .html file that uses it. Search each file
+// for the old URL to find every place it needs to change.
+//
+// Leave a value as an empty string "" to keep the control visible in its
+// pending state (label shown, but not clickable, with a "coming soon"
+// note) — but note this only affects the runtime behaviour; a control
+// that already has a static href in the HTML will still be a real,
+// clickable link regardless of what this file says, until that href is
+// removed too.
 //
 // See LINKS.md for a plain-language walkthrough of each field.
 // ---------------------------------------------------------------------------

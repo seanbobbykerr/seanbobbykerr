@@ -1,25 +1,27 @@
 # Adding real links
 
-Every button and social icon on the landing page reads its destination from
-one file: **`site-config.js`**. That is the only file you need to touch when
-a link becomes real — nothing else on the page has to change.
+Every button and social icon on the site reads its destination from
+`site-config.js`, and every one of those values is already filled in and
+live.
 
-Right now every value is an empty string `""`, which is why the buttons show
-a small "coming soon" note instead of going anywhere.
+**Important:** for search engines and no-JavaScript visitors to actually see
+these links, each one is also hardcoded as a real `href` directly in every
+page's HTML — not just read from this file at runtime. So `site-config.js`
+is no longer the *only* file that needs touching when a URL changes; it's
+the reference copy, and every matching `href="..."` in the `.html` files
+needs to be updated to stay in sync with it.
 
-## How to add a link
+## How to change a link
 
-1. Open `site-config.js`.
-2. Paste the URL between the quotes for the field you want to fill in.
-3. Save the file and refresh the page — that button or icon now works, the
-   pending note disappears automatically, and nothing else needs editing.
+1. Open `site-config.js` and update the value for the field you want to change.
+2. Search every `.html` file for the *old* URL and replace it with the new
+   one wherever it appears as an `href`.
+3. Save and refresh — just tell Claude Code something like:
 
-If you're not comfortable editing the file yourself, just tell Claude Code
-something like:
+> "Set bookOnePurchaseUrl to https://www.amazon.com/my-book-link and update
+> it everywhere it's used"
 
-> "Set bookOnePurchaseUrl to https://www.amazon.com/my-book-link"
-
-and it will make the change for you.
+and it will update both the config file and every hardcoded href for you.
 
 ## What each field controls
 

@@ -125,60 +125,6 @@
   }
 
   /* -----------------------------------------------------------------------
-     Map lightbox
-     ------------------------------------------------------------------- */
-  function initMapLightbox() {
-    var openBtn = document.getElementById("map-open-btn");
-    var exploreBtn = document.getElementById("explore-gyra-btn");
-    var lightbox = document.getElementById("map-lightbox");
-    var closeBtn = document.getElementById("map-close-btn");
-    if (!lightbox) return;
-
-    var lastFocused = null;
-
-    function open() {
-      lastFocused = document.activeElement;
-      lightbox.hidden = false;
-      requestAnimationFrame(function () { lightbox.classList.add("is-open"); });
-      closeBtn.focus();
-      document.body.style.overflow = "hidden";
-    }
-    function close() {
-      lightbox.classList.remove("is-open");
-      document.body.style.overflow = "";
-      var finish = function () { lightbox.hidden = true; };
-      if (reduceMotion) finish();
-      else setTimeout(finish, 250);
-      if (lastFocused) lastFocused.focus();
-    }
-
-    openBtn.addEventListener("click", open);
-    if (exploreBtn) exploreBtn.addEventListener("click", open);
-    closeBtn.addEventListener("click", close);
-    lightbox.querySelectorAll("[data-map-close]").forEach(function (el) {
-      el.addEventListener("click", close);
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !lightbox.hidden) close();
-    });
-  }
-
-  /* -----------------------------------------------------------------------
-     "More About Sean" reveal
-     ------------------------------------------------------------------- */
-  function initAuthorMore() {
-    var btn = document.getElementById("author-more-btn");
-    var panel = document.getElementById("author-more");
-    if (!btn || !panel) return;
-    btn.addEventListener("click", function () {
-      var expanded = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", String(!expanded));
-      panel.hidden = expanded;
-      btn.textContent = expanded ? "More About Sean" : "Show Less";
-    });
-  }
-
-  /* -----------------------------------------------------------------------
      Mailing-list form delivery (Web3Forms)
      Both the free chapter form and the /subscribe form send their
      submissions to SITE_CONFIG.web3formsAccessKey's registered inbox via
@@ -351,8 +297,6 @@
     initHeader();
     initAnchorNav();
     initReveals();
-    initMapLightbox();
-    initAuthorMore();
     initFreeChapterForm();
     initNewsletterForm();
     initFooterYear();
