@@ -618,11 +618,6 @@ p + p { margin-top: 1.1em; }
 .field input:focus { border-color: var(--amber); }
 .field input:invalid:not(:placeholder-shown) { box-shadow: inset 0 0 0 1px #a24a3a; }
 
-.privacy-note {
-  font-size: 0.8rem;
-  color: rgba(244,239,226,0.6);
-  margin: 0.6rem 0 var(--space-3);
-}
 .form-status {
   margin-top: 0.8rem;
   font-size: 0.88rem;
