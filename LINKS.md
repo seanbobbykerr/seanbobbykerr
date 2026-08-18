@@ -28,8 +28,8 @@ and it will make the change for you.
 | `bookOnePurchaseUrl` | Every "Buy The Burned Name" button (hero, Burned Name section, final section) |
 | `bookTwoPreorderUrl` | Every "Preorder Book Two / The Scroll of Recall" button |
 | `web3formsAccessKey` | Powers both email forms: the homepage "free chapter" form and the `/subscribe` newsletter form. See below. |
-| `bookOneGoodreadsReviewUrl` | The "Review on Goodreads" button on `/reviews` for The Burned Name |
-| `bookOneAmazonReviewUrl` | The "Review on Amazon" button on `/reviews` for The Burned Name |
+| `bookOneGoodreadsReviewUrl` | The "Review on Goodreads" button on `/review` for The Burned Name |
+| `bookOneAmazonReviewUrl` | The "Review on Amazon" button on `/review` for The Burned Name |
 | `supportUrl` | Both Patreon buttons on `/support` ("Read Vaal's Origin on Patreon" and "Visit My Patreon") |
 | `supportPlatformName` | Every mention of "Patreon" on `/support` — change this (and the two fields below) if you ever move to a different membership platform |
 | `supportPlatformLogo` | The logo shown on both `/support` CTA buttons |
