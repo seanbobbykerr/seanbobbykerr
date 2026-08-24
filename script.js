@@ -57,26 +57,35 @@
      ------------------------------------------------------------------- */
   function initHomepageHeroDesigns() {
     var hero = document.getElementById("hero");
-    if (!hero) return;
 
     var designs = [
       { id: "classic", label: "Classic map", note: "Warm artwork + gold plaque" },
       { id: "blue", label: "Blue map", note: "Blue tint + navy and gold CTA" },
-      { id: "spotlight", label: "Spotlight", note: "Dark card + strongest CTA" }
+      { id: "spotlight", label: "Spotlight", note: "Dark card + strongest CTA" },
+      { id: "modern", label: "Modern", note: "Site-wide editorial redesign" }
     ];
     var validDesigns = designs.map(function (design) { return design.id; });
     var configuredDesign = validDesigns.indexOf(CONFIG.homepageHeroDesign) !== -1
       ? CONFIG.homepageHeroDesign
       : "classic";
     var queryDesign = new URLSearchParams(window.location.search).get("hero");
-    var activeDesign = CONFIG.developmentMode === true && validDesigns.indexOf(queryDesign) !== -1
-      ? queryDesign
-      : configuredDesign;
+    var savedDesign = "";
+    if (CONFIG.developmentMode === true) {
+      try { savedDesign = window.localStorage.getItem("sbk-site-design") || ""; } catch (error) {}
+    }
+    var activeDesign = configuredDesign;
+    if (CONFIG.developmentMode === true && validDesigns.indexOf(savedDesign) !== -1) activeDesign = savedDesign;
+    if (CONFIG.developmentMode === true && validDesigns.indexOf(queryDesign) !== -1) activeDesign = queryDesign;
 
     function applyDesign(designId, updateUrl) {
       activeDesign = designId;
+      document.documentElement.dataset.siteDesign = designId === "modern" ? "modern" : "heritage";
       document.body.dataset.homeHero = designId;
-      hero.dataset.heroDesign = designId;
+      if (hero) hero.dataset.heroDesign = designId;
+
+      if (CONFIG.developmentMode === true) {
+        try { window.localStorage.setItem("sbk-site-design", designId); } catch (error) {}
+      }
 
       document.querySelectorAll("[data-hero-design-option]").forEach(function (button) {
         button.setAttribute("aria-pressed", String(button.dataset.heroDesignOption === designId));
@@ -90,11 +99,12 @@
     }
 
     applyDesign(activeDesign, false);
+    if (!hero) return;
     if (CONFIG.developmentMode !== true) return;
 
     var preview = document.createElement("aside");
     preview.className = "hero-design-preview";
-    preview.setAttribute("aria-label", "Homepage hero design preview");
+    preview.setAttribute("aria-label", "Site design preview");
 
     var toggle = document.createElement("button");
     toggle.type = "button";
@@ -106,7 +116,7 @@
     var panel = document.createElement("div");
     panel.className = "hero-design-panel";
     panel.id = "hero-design-panel";
-    panel.innerHTML = '<div class="hero-design-panel-head"><div><span class="hero-design-dev-label">Development mode</span><strong>Homepage first card</strong></div><button type="button" class="hero-design-close" aria-label="Close design preview">&times;</button></div>';
+    panel.innerHTML = '<div class="hero-design-panel-head"><div><span class="hero-design-dev-label">Development mode</span><strong>Site design preview</strong></div><button type="button" class="hero-design-close" aria-label="Close design preview">&times;</button></div>';
 
     var choices = document.createElement("div");
     choices.className = "hero-design-choices";

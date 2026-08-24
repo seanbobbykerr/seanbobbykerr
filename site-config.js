@@ -21,11 +21,12 @@
 // See LINKS.md for a plain-language walkthrough of each field.
 // ---------------------------------------------------------------------------
 window.SITE_CONFIG = {
-  // Homepage first-card design. Change this one value to swap the live view:
+  // Site design preview. Change this one value to swap the live view:
   //   "classic"   — warm map artwork with the original gold plaque
   //   "blue"      — blue-tinted map with a navy button and gold type
   //   "spotlight" — darker, higher-contrast card with an oversized CTA
-  homepageHeroDesign: "blue",
+  //   "modern"    — a site-wide modern editorial redesign
+  homepageHeroDesign: "modern",
 
   // Development-only design picker. Set to false before this branch is used
   // as the public version; the homepage will keep homepageHeroDesign above,
@@ -81,3 +82,13 @@ window.SITE_CONFIG = {
   tiktokUrl: "https://www.tiktok.com/@seanbobbykerr",
   goodreadsUrl: "https://www.goodreads.com/author/show/51095217.Sean_Bobby_Kerr"
 };
+
+// Apply the site-wide preview choice before the page body is painted. The
+// picker in script.js keeps this local preference in sync between pages.
+(function () {
+  var design = window.SITE_CONFIG.homepageHeroDesign || "classic";
+  if (window.SITE_CONFIG.developmentMode === true) {
+    try { design = window.localStorage.getItem("sbk-site-design") || design; } catch (error) {}
+  }
+  document.documentElement.dataset.siteDesign = design === "modern" ? "modern" : "heritage";
+})();
