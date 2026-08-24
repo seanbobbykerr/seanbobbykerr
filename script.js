@@ -50,6 +50,108 @@
   }
 
   /* -----------------------------------------------------------------------
+     Homepage hero design previews
+     SITE_CONFIG.homepageHeroDesign selects the normal view. In development
+     mode, ?hero=classic|blue|spotlight can temporarily override it and a
+     small on-page picker writes that query parameter for quick comparisons.
+     ------------------------------------------------------------------- */
+  function initHomepageHeroDesigns() {
+    var hero = document.getElementById("hero");
+    if (!hero) return;
+
+    var designs = [
+      { id: "classic", label: "Classic map", note: "Warm artwork + gold plaque" },
+      { id: "blue", label: "Blue map", note: "Blue tint + navy and gold CTA" },
+      { id: "spotlight", label: "Spotlight", note: "Dark card + strongest CTA" }
+    ];
+    var validDesigns = designs.map(function (design) { return design.id; });
+    var configuredDesign = validDesigns.indexOf(CONFIG.homepageHeroDesign) !== -1
+      ? CONFIG.homepageHeroDesign
+      : "classic";
+    var queryDesign = new URLSearchParams(window.location.search).get("hero");
+    var activeDesign = CONFIG.developmentMode === true && validDesigns.indexOf(queryDesign) !== -1
+      ? queryDesign
+      : configuredDesign;
+
+    function applyDesign(designId, updateUrl) {
+      activeDesign = designId;
+      document.body.dataset.homeHero = designId;
+      hero.dataset.heroDesign = designId;
+
+      document.querySelectorAll("[data-hero-design-option]").forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.heroDesignOption === designId));
+      });
+
+      if (updateUrl) {
+        var url = new URL(window.location.href);
+        url.searchParams.set("hero", designId);
+        window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+      }
+    }
+
+    applyDesign(activeDesign, false);
+    if (CONFIG.developmentMode !== true) return;
+
+    var preview = document.createElement("aside");
+    preview.className = "hero-design-preview";
+    preview.setAttribute("aria-label", "Homepage hero design preview");
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "hero-design-toggle";
+    toggle.id = "hero-design-toggle";
+    toggle.setAttribute("aria-controls", "hero-design-panel");
+    toggle.innerHTML = '<span aria-hidden="true">&#10022;</span><span>Preview designs</span>';
+
+    var panel = document.createElement("div");
+    panel.className = "hero-design-panel";
+    panel.id = "hero-design-panel";
+    panel.innerHTML = '<div class="hero-design-panel-head"><div><span class="hero-design-dev-label">Development mode</span><strong>Homepage first card</strong></div><button type="button" class="hero-design-close" aria-label="Close design preview">&times;</button></div>';
+
+    var choices = document.createElement("div");
+    choices.className = "hero-design-choices";
+    designs.forEach(function (design) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "hero-design-choice";
+      button.dataset.heroDesignOption = design.id;
+      button.innerHTML = '<span class="hero-design-swatch hero-design-swatch-' + design.id + '" aria-hidden="true"></span><span><strong>' + design.label + '</strong><small>' + design.note + '</small></span>';
+      button.addEventListener("click", function () { applyDesign(design.id, true); });
+      choices.appendChild(button);
+    });
+    panel.appendChild(choices);
+
+    var startsOpen = CONFIG.homepageHeroPanelStartsOpen === true;
+    function setPanelOpen(isOpen) {
+      preview.classList.toggle("is-open", isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      panel.hidden = !isOpen;
+      if (isOpen) {
+        var selected = panel.querySelector('[aria-pressed="true"]');
+        if (selected) selected.focus();
+      }
+    }
+
+    toggle.addEventListener("click", function () { setPanelOpen(!preview.classList.contains("is-open")); });
+    panel.querySelector(".hero-design-close").addEventListener("click", function () {
+      setPanelOpen(false);
+      toggle.focus();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && preview.classList.contains("is-open")) {
+        setPanelOpen(false);
+        toggle.focus();
+      }
+    });
+
+    preview.appendChild(toggle);
+    preview.appendChild(panel);
+    document.body.appendChild(preview);
+    setPanelOpen(startsOpen);
+    applyDesign(activeDesign, false);
+  }
+
+  /* -----------------------------------------------------------------------
      Header: scroll shadow + mobile nav
      ------------------------------------------------------------------- */
   function initHeader() {
@@ -317,6 +419,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     applyConfigLinks();
+    initHomepageHeroDesigns();
     initHeader();
     initAnchorNav();
     initReveals();

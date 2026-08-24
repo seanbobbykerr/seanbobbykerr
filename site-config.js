@@ -21,6 +21,18 @@
 // See LINKS.md for a plain-language walkthrough of each field.
 // ---------------------------------------------------------------------------
 window.SITE_CONFIG = {
+  // Homepage first-card design. Change this one value to swap the live view:
+  //   "classic"   — warm map artwork with the original gold plaque
+  //   "blue"      — blue-tinted map with a navy button and gold type
+  //   "spotlight" — darker, higher-contrast card with an oversized CTA
+  homepageHeroDesign: "blue",
+
+  // Development-only design picker. Set to false before this branch is used
+  // as the public version; the homepage will keep homepageHeroDesign above,
+  // but the floating preview control will disappear completely.
+  developmentMode: true,
+  homepageHeroPanelStartsOpen: false,
+
   bookOnePurchaseUrl: "https://mybook.to/theburnedname",
   bookTwoPreorderUrl: "https://mybook.to/thescrollofrecall",
 

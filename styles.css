@@ -309,6 +309,88 @@ p + p { margin-top: 1.1em; }
    .hero is mobile-only) and the DESKTOP HOMEPAGE REBUILD block (.hero-map).
    ========================================================================== */
 
+/* Development-only hero design picker. It is injected by script.js only when
+   SITE_CONFIG.developmentMode is true, so none of this UI exists in the
+   production accessibility tree when preview mode is disabled. */
+.hero-design-preview {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-body);
+  line-height: 1.3;
+}
+.hero-design-toggle {
+  order: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+  padding: 0.72rem 1rem;
+  color: #f4efe2;
+  background: #131f3d;
+  border: 1px solid rgba(230, 185, 105, 0.7);
+  border-radius: 999px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.32);
+  font-family: var(--font-display-sc);
+  font-size: 0.82rem;
+}
+.hero-design-toggle > span:first-child { color: #e6b969; }
+.hero-design-panel {
+  order: 1;
+  width: min(340px, calc(100vw - 2rem));
+  margin-bottom: 0.65rem;
+  padding: 1rem;
+  color: var(--ivory);
+  background: rgba(10, 18, 32, 0.97);
+  border: 1px solid rgba(230, 185, 105, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.45);
+  backdrop-filter: blur(16px);
+}
+.hero-design-panel[hidden] { display: none; }
+.hero-design-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(244, 239, 226, 0.13);
+}
+.hero-design-panel-head strong { display: block; font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; }
+.hero-design-dev-label { display: block; color: #e6b969; font-family: var(--font-display-sc); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.hero-design-close { padding: 0 0.2rem; color: rgba(244, 239, 226, 0.7); font-size: 1.6rem; line-height: 1; }
+.hero-design-choices { display: grid; gap: 0.45rem; padding-top: 0.75rem; }
+.hero-design-choice {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.65rem;
+  color: var(--ivory);
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 6px;
+}
+.hero-design-choice:hover { background: rgba(244, 239, 226, 0.06); }
+.hero-design-choice[aria-pressed="true"] { background: rgba(230, 185, 105, 0.1); border-color: rgba(230, 185, 105, 0.55); }
+.hero-design-choice strong { display: block; font-family: var(--font-display-sc); font-size: 0.88rem; font-weight: 600; }
+.hero-design-choice small { display: block; margin-top: 0.12rem; color: rgba(244, 239, 226, 0.62); font-size: 0.75rem; }
+.hero-design-swatch { width: 42px; height: 34px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); }
+.hero-design-swatch-classic { background: linear-gradient(145deg, #544021, #d5ad62); }
+.hero-design-swatch-blue { background: linear-gradient(145deg, #0e1c37, #34558e); }
+.hero-design-swatch-spotlight { background: radial-gradient(circle at 70% 25%, #a5732d, #11131b 55%); }
+
+@media (max-width: 1023px) {
+  .hero-design-preview { top: 4.6rem; right: 0.7rem; bottom: auto; }
+  .hero-design-toggle { order: 1; padding: 0.6rem 0.82rem; }
+  .hero-design-panel { order: 2; margin: 0.55rem 0 0; }
+}
+
 /* ==========================================================================
    The Burned Name
    ========================================================================== */
@@ -654,22 +736,43 @@ p + p { margin-top: 1.1em; }
   #world, #author { display: none; }
 
   /* ---- book-on-map hero --------------------------------------------------
-     Real dedicated mobile asset ("Mobile hero - books on map FINAL DARK
-     SECTION EXTENDED"), used at its full native aspect ratio (1080x2280) —
-     no cropping. Its bottom quarter is already a built-in dark gradient,
-     which is what the overlay copy sits on. */
+     The first card is capped to the opening viewport so its purchase action
+     cannot fall below the fold. The portrait artwork uses a deliberate cover
+     crop that keeps the book, map, and compass all in the frame. */
   .hero { padding: 0; overflow: hidden; background: var(--dusk-3); }
-  .mobile-hero-frame { position: relative; width: 100%; line-height: 0; }
-  .mobile-hero-img { display: block; width: 100%; height: auto; }
+  .mobile-hero-frame {
+    position: relative;
+    width: 100%;
+    height: min(760px, calc(100svh - 56px));
+    min-height: 520px;
+    overflow: hidden;
+    line-height: 0;
+    background: var(--dusk-3);
+  }
+  .mobile-hero-frame::before,
+  .mobile-hero-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .mobile-hero-frame::before { z-index: 1; opacity: 0; transition: opacity 0.25s ease; }
+  .mobile-hero-frame::after {
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(4,6,10,0.03) 36%, rgba(4,7,13,0.34) 56%, rgba(4,7,13,0.94) 100%);
+  }
+  .mobile-hero-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 18%;
+    transition: filter 0.25s ease, transform 0.4s var(--ease);
+  }
   .mobile-hero-copy {
-    /* Bottom-anchored with auto height: padding-top here has NO effect on
-       where the headline actually lands (this box just grows upward to
-       compensate, since bottom is pinned) — don't reach for it again.
-       Clearance from the compass artwork above comes from .mobile-hero-line
-       and .mobile-hero-eyebrow's own size/margins shrinking this box's
-       total height instead; see their comments. */
     position: absolute;
     left: 0; right: 0; bottom: 0;
+    z-index: 3;
     padding: 1.5rem 1.5rem 2.4rem;
     line-height: normal;
     text-align: center;
@@ -734,6 +837,52 @@ p + p { margin-top: 1.1em; }
       0 0 18px rgba(224,172,72,0.3);
   }
   .mobile-hero-cta.is-pending { cursor: default; }
+
+  /* Blue map — the branded navy treatment used on the Books/About heroes,
+     with an intentionally blue CTA and gold lettering. */
+  body[data-home-hero="blue"] .mobile-hero-frame::before {
+    opacity: 1;
+    background: linear-gradient(155deg, rgba(20,47,99,0.82), rgba(8,19,42,0.46));
+    mix-blend-mode: color;
+  }
+  body[data-home-hero="blue"] .mobile-hero-img { filter: grayscale(0.32) saturate(0.72) brightness(0.78) contrast(1.08); }
+  body[data-home-hero="blue"] .mobile-hero-cta {
+    color: #f0c76f;
+    background:
+      radial-gradient(120% 160% at 14% 0%, rgba(76,112,184,0.48), transparent 56%),
+      linear-gradient(145deg, #243f79 0%, #172b57 52%, #0e1b39 100%);
+    border-color: #b6812e;
+    box-shadow:
+      inset 0 0 0 2px rgba(230,185,105,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 4px 0 rgba(84,55,17,0.72),
+      0 14px 28px -9px rgba(0,0,0,0.88),
+      0 0 24px rgba(230,185,105,0.22);
+  }
+
+  /* Spotlight — a more editorial card, with a glassy text stage and the CTA
+     widened into the strongest visual object in the first viewport. */
+  body[data-home-hero="spotlight"] .mobile-hero-frame::after {
+    background: linear-gradient(180deg, rgba(2,3,6,0.04) 22%, rgba(2,3,6,0.18) 43%, rgba(2,3,6,0.95) 76%);
+  }
+  body[data-home-hero="spotlight"] .mobile-hero-img {
+    filter: saturate(0.82) brightness(0.7) contrast(1.14);
+    transform: scale(1.035);
+  }
+  body[data-home-hero="spotlight"] .mobile-hero-copy {
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0.85rem;
+    padding: 1.2rem;
+    background: rgba(8,12,20,0.72);
+    border: 1px solid rgba(230,185,105,0.48);
+    border-radius: 8px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.48), inset 0 1px rgba(255,255,255,0.06);
+    backdrop-filter: blur(7px);
+  }
+  body[data-home-hero="spotlight"] .mobile-hero-line { font-size: clamp(1.72rem, 1.3rem + 3.5vw, 2.25rem); margin-bottom: 0.8rem; }
+  body[data-home-hero="spotlight"] .mobile-hero-eyebrow { margin-bottom: 0.75rem; }
+  body[data-home-hero="spotlight"] .mobile-hero-cta { max-width: 360px; padding-block: 1.08rem; }
 
   /* ---- blurb card ---------------------------------------------------------
      A bordered amber-to-navy card (per the mobile blurb reference) rather
@@ -1044,10 +1193,21 @@ p + p { margin-top: 1.1em; }
 
   /* ---- epic book-on-map hero ------------------------------------------ */
   .hero-map { position: relative; background: var(--dusk-3); }
-  .hero-map-frame { position: relative; width: 100%; margin: 0 auto; line-height: 0; }
-  .hero-map-img { display: block; width: 100%; height: auto; }
+  .hero-map-frame { position: relative; width: 100%; margin: 0 auto; overflow: hidden; line-height: 0; background: var(--dusk-3); }
+  .hero-map-frame::before,
+  .hero-map-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .hero-map-img { display: block; width: 100%; height: auto; transition: filter 0.25s ease, transform 0.4s var(--ease); }
   .hero-map-copy {
     position: absolute;
+    z-index: 2;
     left: 6%;
     top: 41%;
     transform: translateY(-50%);
@@ -1148,6 +1308,53 @@ p + p { margin-top: 1.1em; }
       0 14px 28px -10px rgba(0,0,0,0.75),
       0 0 22px rgba(224,172,72,0.3);
   }
+
+  /* Configurable desktop counterparts to the three mobile first-card views. */
+  body[data-home-hero="blue"] .hero-map-frame::before {
+    opacity: 1;
+    background: linear-gradient(112deg, rgba(24,57,116,0.83) 0%, rgba(20,49,103,0.63) 42%, rgba(8,18,39,0.5) 100%);
+    mix-blend-mode: color;
+  }
+  body[data-home-hero="blue"] .hero-map-img { filter: grayscale(0.35) saturate(0.72) brightness(0.8) contrast(1.08); }
+  body[data-home-hero="blue"] .hero-map-cta {
+    color: #f0c76f;
+    background:
+      radial-gradient(120% 160% at 14% 0%, rgba(76,112,184,0.5), transparent 56%),
+      linear-gradient(145deg, #294984 0%, #192f60 52%, #0d1b39 100%);
+    border-color: #b6812e;
+    box-shadow:
+      inset 0 0 0 2px rgba(230,185,105,0.22),
+      inset 0 1px 0 rgba(255,255,255,0.13),
+      0 4px 0 rgba(84,55,17,0.75),
+      0 16px 30px -10px rgba(0,0,0,0.9),
+      0 0 28px rgba(230,185,105,0.23);
+  }
+  body[data-home-hero="blue"] .hero-map-cta:hover {
+    color: #ffe09a;
+    background:
+      radial-gradient(120% 160% at 14% 0%, rgba(92,132,211,0.56), transparent 56%),
+      linear-gradient(145deg, #315693 0%, #203a6f 52%, #112247 100%);
+  }
+
+  body[data-home-hero="spotlight"] .hero-map-frame::after {
+    opacity: 1;
+    background: linear-gradient(90deg, rgba(4,6,10,0.68) 0%, rgba(4,6,10,0.22) 42%, transparent 70%);
+  }
+  body[data-home-hero="spotlight"] .hero-map-img { filter: saturate(0.82) brightness(0.76) contrast(1.12); transform: scale(1.018); }
+  body[data-home-hero="spotlight"] .hero-map-copy {
+    left: 4.5%;
+    top: 50%;
+    max-width: 38%;
+    padding: 2.4rem 2.6rem;
+    background: rgba(8,12,20,0.76);
+    border: 1px solid rgba(230,185,105,0.48);
+    border-radius: 8px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.5), inset 0 1px rgba(255,255,255,0.06);
+    backdrop-filter: blur(7px);
+  }
+  body[data-home-hero="spotlight"] .hero-map-copy::before { display: none; }
+  body[data-home-hero="spotlight"] .hero-map-line { font-size: clamp(2.25rem, 1.45rem + 2.55vw, 3.55rem); margin-bottom: 1.8rem; }
+  body[data-home-hero="spotlight"] .hero-map-cta { width: 100%; justify-content: center; padding-block: 1.05rem; }
 
   /* ---- blurb section ----------------------------------------------------
      Dimensional target (see brand_assets "NEW Desktop Hero Blurb-Section-
