@@ -192,10 +192,10 @@
       submitToMailingList({
         name: name,
         email: email,
-        source: "Homepage Free Chapter Form"
+        source: "Homepage Mailing List Form"
       })
         .then(function () {
-          setStatus("Chapter on its way — check your inbox.", false);
+          setStatus("You're on the list — welcome to Gyra.", false);
           form.reset();
         })
         .catch(function (err) {
