@@ -26,7 +26,7 @@ window.SITE_CONFIG = {
   //   "blue"      — blue-tinted map with a navy button and gold type
   //   "spotlight" — darker, higher-contrast card with an oversized CTA
   //   "modern"    — a site-wide modern editorial redesign
-  homepageHeroDesign: "modern",
+  homepageHeroDesign: "spotlight",
 
   // Development-only design picker. Production keeps homepageHeroDesign
   // above, while the floating preview control stays completely hidden.
