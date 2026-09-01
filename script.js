@@ -52,7 +52,7 @@
   /* -----------------------------------------------------------------------
      Homepage hero design previews
      SITE_CONFIG.homepageHeroDesign selects the normal view. In development
-     mode, ?hero=classic|blue|spotlight can temporarily override it and a
+     mode, ?hero=classic|blue|spotlight|modern can temporarily override it and a
      small on-page picker writes that query parameter for quick comparisons.
      ------------------------------------------------------------------- */
   function initHomepageHeroDesigns() {

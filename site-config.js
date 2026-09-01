@@ -28,10 +28,9 @@ window.SITE_CONFIG = {
   //   "modern"    — a site-wide modern editorial redesign
   homepageHeroDesign: "modern",
 
-  // Development-only design picker. Set to false before this branch is used
-  // as the public version; the homepage will keep homepageHeroDesign above,
-  // but the floating preview control will disappear completely.
-  developmentMode: true,
+  // Development-only design picker. Production keeps homepageHeroDesign
+  // above, while the floating preview control stays completely hidden.
+  developmentMode: false,
   homepageHeroPanelStartsOpen: false,
 
   bookOnePurchaseUrl: "https://mybook.to/theburnedname",
