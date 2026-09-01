@@ -237,26 +237,34 @@
   }
 
   /* -----------------------------------------------------------------------
-     Mailing-list form delivery (Web3Forms)
-     Both the free chapter form and the /subscribe form send their
-     submissions to SITE_CONFIG.web3formsAccessKey's registered inbox via
-     Web3Forms' JSON API — no backend of our own, no secret key (the access
-     key is meant to be public/embeddable; see the comment in site-config.js).
-     While the key is blank, both forms validate but never pretend to have
-     submitted anything.
+     Mailing-list form delivery
+     Both the free chapter form and the /subscribe form post to /api/subscribe,
+     a server-side function that adds the visitor to the Kit mailing list
+     (Kit API v4, using a secret key that only ever lives on the server) and
+     forwards the same submission to SITE_CONFIG.web3formsAccessKey's
+     registered inbox as a backup notification. The Web3Forms key is public/
+     embeddable by design (see the comment in site-config.js) — passing it
+     along here is not a secret handoff, it just keeps that config in one
+     place. A visitor only ever sees success once Kit has actually accepted
+     them; while KIT_API_KEY isn't configured server-side yet, both forms
+     validate but never pretend to have submitted anything.
      ------------------------------------------------------------------- */
   function submitToMailingList(fields) {
-    var payload = { access_key: CONFIG.web3formsAccessKey };
+    var payload = { web3formsAccessKey: CONFIG.web3formsAccessKey };
     for (var key in fields) {
       if (Object.prototype.hasOwnProperty.call(fields, key)) payload[key] = fields[key];
     }
-    return fetch("https://api.web3forms.com/submit", {
+    return fetch("/api/subscribe", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     }).then(function (res) {
-      return res.json().then(function (data) {
-        if (!res.ok || !data.success) throw new Error((data && data.message) || "submission-failed");
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data.ok) {
+          var err = new Error((data && data.error) || "submission-failed");
+          err.code = data && data.error;
+          throw err;
+        }
         return data;
       });
     });
@@ -286,11 +294,6 @@
         return;
       }
 
-      if (!CONFIG.web3formsAccessKey) {
-        setStatus("Email delivery will be connected before launch.", false);
-        return;
-      }
-
       var name = nameField.value.trim();
       var email = emailField.value.trim();
 
@@ -299,18 +302,20 @@
       setStatus("Sending…", false);
 
       submitToMailingList({
-        subject: (name || email) + " wants to join the mailing list!",
-        from_name: "Sean Bobby Kerr Website",
         name: name,
         email: email,
-        message: "Name: " + (name || "(not provided)") + "\nEmail: " + email + "\nSource: Homepage Free Chapter Form"
+        source: "Homepage Mailing List Form"
       })
         .then(function () {
-          setStatus("Chapter on its way — check your inbox.", false);
+          setStatus("You're on the list — welcome to Gyra.", false);
           form.reset();
         })
-        .catch(function () {
-          setStatus("Something went wrong. Please try again shortly.", true);
+        .catch(function (err) {
+          if (err && err.code === "not-configured") {
+            setStatus("Email delivery will be connected before launch.", false);
+          } else {
+            setStatus("Something went wrong. Please try again shortly.", true);
+          }
         })
         .then(function () {
           submitting = false;
@@ -345,11 +350,6 @@
         return;
       }
 
-      if (!CONFIG.web3formsAccessKey) {
-        setStatus("Mailing-list delivery will be connected before launch.", false);
-        return;
-      }
-
       var email = emailField.value.trim();
 
       submitting = true;
@@ -357,17 +357,19 @@
       setStatus("Sending…", false);
 
       submitToMailingList({
-        subject: email + " wants to join the mailing list!",
-        from_name: "Sean Bobby Kerr Website",
         email: email,
-        message: "Name: (not provided)\nEmail: " + email + "\nSource: Subscribe Page"
+        source: "Subscribe Page"
       })
         .then(function () {
           setStatus("You're on the list — welcome to Gyra.", false);
           form.reset();
         })
-        .catch(function () {
-          setStatus("Something went wrong. Please try again shortly.", true);
+        .catch(function (err) {
+          if (err && err.code === "not-configured") {
+            setStatus("Mailing-list delivery will be connected before launch.", false);
+          } else {
+            setStatus("Something went wrong. Please try again shortly.", true);
+          }
         })
         .then(function () {
           submitting = false;

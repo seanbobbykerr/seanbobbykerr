@@ -37,13 +37,15 @@ window.SITE_CONFIG = {
   bookOnePurchaseUrl: "https://mybook.to/theburnedname",
   bookTwoPreorderUrl: "https://mybook.to/thescrollofrecall",
 
-  // Both the homepage "free chapter" form and the /subscribe form deliver
-  // their submissions straight to your inbox via Web3Forms (web3forms.com) —
-  // a free service built for exactly this: static sites with no backend
-  // that need form submissions emailed somewhere, with no server and no
-  // secret credentials in the page. Leave this blank and both forms stay
-  // in their honest "not connected yet" state (they validate the email but
-  // never claim to have sent anything). To turn it on:
+  // Both the homepage "free chapter" form and the /subscribe form post to
+  // /api/subscribe (a Vercel serverless function), which adds the
+  // submission to your Kit mailing list and ALSO forwards it here, to
+  // Web3Forms (web3forms.com), as a backup inbox notification — a free
+  // service built for exactly this: emailing a form submission somewhere
+  // with no secret credentials in the page. This key is only ever used for
+  // that backup email; it never talks to Kit. Leave this blank and the
+  // backup email is silently skipped (Kit signups still work fine without
+  // it). To turn it on:
   //   1. Go to https://web3forms.com and enter seanbobbykerr@gmail.com.
   //   2. You'll immediately get an "Access Key" by email — no account or
   //      password needed.
@@ -51,7 +53,10 @@ window.SITE_CONFIG = {
   // This key is meant to be public/embedded in front-end code (Web3Forms
   // documents it as safe to expose, similar to a reCAPTCHA site key) — it
   // cannot be used to change where submissions are delivered, only to send
-  // one to the inbox that was registered when the key was created.
+  // one to the inbox that was registered when the key was created. See
+  // LINKS.md and api/subscribe.js for the Kit side, which needs the
+  // separate, secret KIT_API_KEY environment variable — never put that one
+  // here.
   web3formsAccessKey: "36576aa8-9024-4278-bdc8-a620bfa036c5",
 
   bookOneGoodreadsReviewUrl: "https://www.goodreads.com/book/show/256679948-the-burned-name",

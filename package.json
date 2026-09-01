@@ -1,0 +1,8 @@
+{
+  "name": "seanbobbykerr-website",
+  "private": true,
+  "description": "Static site for seanbobbykerr.com, plus a single Vercel serverless function (/api/subscribe) for mailing-list signups.",
+  "engines": {
+    "node": ">=18"
+  }
+}

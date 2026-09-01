@@ -60,34 +60,42 @@ update automatically from the three fields above.
 
 ## The free chapter and newsletter forms
 
-Both forms deliver straight to your inbox via [Web3Forms](https://web3forms.com) —
-a free service built for exactly this: static sites with no backend that
-need form submissions emailed somewhere, without a server and without any
-secret credentials sitting in the page.
+Both forms (the homepage "free chapter" form and the `/subscribe` page form)
+post to `/api/subscribe`, a small Vercel serverless function
+(`api/subscribe.js`) — the one and only place that talks to Kit. The browser
+never sees a Kit credential.
 
-To turn them on:
+What happens on submit:
 
-1. Go to https://web3forms.com and enter **seanbobbykerr@gmail.com**.
-2. You'll immediately get an **Access Key** by email — no account or
-   password required.
-3. Paste that key into `web3formsAccessKey` in `site-config.js`.
+1. The function validates and normalises the email server-side.
+2. It upserts the subscriber into your Kit mailing list via the Kit API v4
+   (`POST https://api.kit.com/v4/subscribers`), authenticated with
+   `KIT_API_KEY` — read from `process.env.KIT_API_KEY`, never from the page.
+   Submitting an email that's already subscribed just updates that
+   subscriber; it does not create a duplicate.
+3. It also forwards the same submission to
+   [Web3Forms](https://web3forms.com) as a backup inbox notification, using
+   `web3formsAccessKey` from `site-config.js` — unchanged from before, and
+   still fine to keep public/embedded in front-end code (Web3Forms documents
+   it as safe to expose, similar to a reCAPTCHA site key). This step is
+   best-effort: it never blocks or fails the visitor-facing result, so a
+   Web3Forms hiccup can't break a signup, and a Kit hiccup doesn't cost you
+   the lead either, since you'd still get the backup email.
+4. The visitor only sees a success message once **Kit** has actually
+   accepted the subscriber — that's the real source of truth now, not the
+   inbox email.
 
-That's it — both forms start working the moment the key is filled in. Every
-submission arrives as an email to seanbobbykerr@gmail.com with:
+To turn it on, set `KIT_API_KEY` (your Kit API v4 key) as an environment
+variable — locally in `.env.local` (gitignored, see `.env.example`), and in
+Vercel's project settings for production. Until `KIT_API_KEY` is configured,
+both forms validate the email but always show an honest message — "Email
+delivery will be connected before launch" / "Mailing-list delivery will be
+connected before launch" — instead of pretending to send anything. There is
+no fake success state anywhere on the site.
 
-- **Subject:** `<name> wants to join the mailing list!` (or the visitor's
-  email address if they left the optional name field blank on the homepage
-  form)
-- **Body:** the submitted name (if any), email, and which form it came from
-  ("Homepage Free Chapter Form" or "Subscribe Page")
-
-This key is meant to be public/embedded in front-end code — Web3Forms
-documents it as safe to expose (similar to a reCAPTCHA site key). It can
-only be used to send a submission to the inbox that was registered when the
-key was created; it can't be used to read, redirect, or change anything.
-
-Until `web3formsAccessKey` has a real value, each form validates the email
-address but always shows an honest message — "Email delivery will be
-connected before launch" / "Mailing-list delivery will be connected before
-launch" — instead of pretending to send anything. There is no fake success
-state anywhere on the site.
+Optional: set `KIT_TAG_ID` (also in `.env.local` / Vercel) to a numeric Kit
+Tag ID if you want every website subscriber automatically tagged (e.g. a
+"Website Signup" tag), so they're identifiable as coming from
+seanbobbykerr.com. Find/create the tag in Kit under Grow > Tags — the ID is
+in its URL. Leave blank to skip tagging; subscriber creation works fine
+without it.
