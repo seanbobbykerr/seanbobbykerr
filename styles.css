@@ -919,9 +919,9 @@ p + p { margin-top: 1.1em; }
     margin-bottom: 1.1rem;
   }
   .blurb-copy p { font-size: 1.05rem; line-height: 1.7; text-align: left; }
-  .blurb-scorched { font-style: italic; font-size: 1.15rem; margin: 1.6rem 0; }
-  .blurb-scorched em { font-style: italic; color: rgba(244,239,226,0.92); }
-  .blurb-religion { font-style: italic; font-weight: 400; font-size: 1.25rem; }
+  .blurb-scorched { margin: 1.6rem 0; }
+  .blurb-scorched em { font-style: normal; color: rgba(244,239,226,0.92); }
+  .blurb-religion { font-weight: 400; }
 
   /* Same gold-plaque CTA component as .mobile-hero-cta, at ~85% scale —
      one button "language" reused everywhere Buy The Burned Name appears,
@@ -1406,9 +1406,9 @@ p + p { margin-top: 1.1em; }
     margin-bottom: 1.5rem;
   }
   .blurb-copy p { font-size: clamp(1.25rem, 1.1rem + 0.35vw, 1.375rem); line-height: 1.65; }
-  .blurb-scorched { font-style: italic; font-size: clamp(1.3rem, 1.15rem + 0.4vw, 1.5rem); margin: 1.8rem 0; }
-  .blurb-scorched em { font-style: italic; color: rgba(244,239,226,0.92); }
-  .blurb-religion { font-style: italic; font-weight: 400; font-size: clamp(1.4rem, 1.25rem + 0.4vw, 1.6rem); }
+  .blurb-scorched { margin: 1.8rem 0; }
+  .blurb-scorched em { font-style: normal; color: rgba(244,239,226,0.92); }
+  .blurb-religion { font-weight: 400; }
 
   /* Same gold-plaque CTA component as .hero-map-cta, at ~85% scale — one
      recognizable "Buy The Burned Name" button language reused everywhere
