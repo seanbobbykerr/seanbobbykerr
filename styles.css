@@ -1880,13 +1880,14 @@ p + p { margin-top: 1.1em; }
      pattern replaced. Only one dimension may ever be the fixed one. */
   .book-tile-art img { width: auto; height: clamp(390px, 35vw, 510px); }
   /* A portrait cover at that same fixed height renders much narrower than
-     the landscape mockups, which left .book-tile-body (flex: 1 1 auto,
-     centered within whatever space remains) stranded off to the right with
-     a huge gap before it. Centering the image+text pair as one block,
-     instead of stretching the text column to fill the leftover row, keeps
-     it sitting naturally next to the cover regardless of its narrower width. */
+     the landscape mockups (same height as Books One/Three above — left
+     alone so all three tiles stay the same height), which left
+     .book-tile-body (flex: 1 1 auto, centered within whatever space
+     remains) stranded off to the right with a huge gap before it. Centering
+     the image+text pair as one block, instead of stretching the text
+     column to fill the leftover row, keeps it sitting naturally next to
+     the cover regardless of its narrower width. */
   .book-tile-portrait { justify-content: center; }
-  .book-tile-portrait .book-tile-art img { height: clamp(360px, 30vw, 460px); }
   .book-tile-portrait .book-tile-body {
     flex: 0 1 auto;
     margin: 0;
