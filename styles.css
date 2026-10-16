@@ -1822,6 +1822,10 @@ p + p { margin-top: 1.1em; }
   max-width: 100%;
   filter: drop-shadow(0 20px 30px rgba(0,0,0,0.55));
 }
+/* Book Two's tile art is a true portrait front cover, not the landscape
+   3D-mockup style used for Books One/Three — the shared width above renders
+   it far taller than its neighbors, so it gets its own narrower cap. */
+.book-tile-portrait .book-tile-art img { width: clamp(190px, 52vw, 240px); }
 /* Restores its own horizontal inset now that .book-tile's own padding has
    been trimmed to almost nothing to give the cover art room — title/CTA
    text still needs real margins even though the tile itself doesn't. */
@@ -1875,6 +1879,18 @@ p + p { margin-top: 1.1em; }
      effect at once would distort the cover exactly like the old bug this
      pattern replaced. Only one dimension may ever be the fixed one. */
   .book-tile-art img { width: auto; height: clamp(390px, 35vw, 510px); }
+  /* A portrait cover at that same fixed height renders much narrower than
+     the landscape mockups, which left .book-tile-body (flex: 1 1 auto,
+     centered within whatever space remains) stranded off to the right with
+     a huge gap before it. Centering the image+text pair as one block,
+     instead of stretching the text column to fill the leftover row, keeps
+     it sitting naturally next to the cover regardless of its narrower width. */
+  .book-tile-portrait { justify-content: center; }
+  .book-tile-portrait .book-tile-art img { height: clamp(360px, 30vw, 460px); }
+  .book-tile-portrait .book-tile-body {
+    flex: 0 1 auto;
+    margin: 0;
+  }
   .book-tile-body {
     flex: 1 1 auto;
     align-items: center;
