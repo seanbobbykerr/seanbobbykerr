@@ -1824,8 +1824,15 @@ p + p { margin-top: 1.1em; }
 }
 /* Book Two's tile art is a true portrait front cover, not the landscape
    3D-mockup style used for Books One/Three — the shared width above renders
-   it far taller than its neighbors, so it gets its own narrower cap. */
-.book-tile-portrait .book-tile-art img { width: clamp(190px, 52vw, 240px); }
+   it far taller than its neighbors, so it gets its own narrower cap. Scoped
+   to below the desktop breakpoint only: this selector's specificity is
+   higher than the desktop block's plain ".book-tile-art img" rule, so left
+   unscoped it would keep winning on desktop too and fight that rule's own
+   fixed height there — the exact both-dimensions-fixed distortion bug the
+   comment below warns about. */
+@media (max-width: 1023px) {
+  .book-tile-portrait .book-tile-art img { width: clamp(190px, 52vw, 240px); }
+}
 /* Restores its own horizontal inset now that .book-tile's own padding has
    been trimmed to almost nothing to give the cover art room — title/CTA
    text still needs real margins even though the tile itself doesn't. */
