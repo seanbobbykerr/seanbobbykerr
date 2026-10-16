@@ -1886,12 +1886,6 @@ p + p { margin-top: 1.1em; }
      effect at once would distort the cover exactly like the old bug this
      pattern replaced. Only one dimension may ever be the fixed one. */
   .book-tile-art img { width: auto; height: clamp(390px, 35vw, 510px); }
-  /* Sized to roughly half the shared height above so the portrait cover
-     reads noticeably smaller than Books One/Three, per reference — the
-     narrower resulting width also pushes .book-tile-body (flex: 1 1 auto,
-     centered in whatever space remains, same as the other two tiles)
-     further right, opening up the gap shown in the reference. */
-  .book-tile-portrait .book-tile-art img { height: clamp(195px, 17vw, 255px); }
   .book-tile-body {
     flex: 1 1 auto;
     align-items: center;
@@ -1900,6 +1894,20 @@ p + p { margin-top: 1.1em; }
     margin: 0 auto;
     padding: 0;
   }
+  /* Book Two's composition is pixel-measured off book-two-reference.png
+     (percentages of the card's content-box width): cover starts 21% in,
+     is 22% wide, then a 27% gap before a right-aligned text column with a
+     7% margin to the card's right edge. Percentages (not vw-clamps) so the
+     ratios hold at every width, not just the one the reference happened to
+     be exported at — margin-left/flex-basis percentages on a flex item
+     resolve against the row's own content-box width, which .book-tile
+     fixes (it fills .book-tiles-inner), so this isn't circular the way a
+     percentage width on the <img> itself would be (sized by its own
+     content, i.e. by the image — no definite box to resolve against). */
+  .book-tile-portrait { gap: 0; }
+  .book-tile-portrait .book-tile-art { flex: 0 0 22%; margin-left: 21%; }
+  .book-tile-portrait .book-tile-art img { width: 100%; height: auto; }
+  .book-tile-portrait .book-tile-body { flex: 0 1 auto; margin: 0 7% 0 auto; }
 }
 
 /* ==========================================================================
