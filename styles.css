@@ -1886,12 +1886,12 @@ p + p { margin-top: 1.1em; }
      effect at once would distort the cover exactly like the old bug this
      pattern replaced. Only one dimension may ever be the fixed one. */
   .book-tile-art img { width: auto; height: clamp(390px, 35vw, 510px); }
-  /* Sized to 2/3 of the shared height above (390/510 * 0.67) so the
-     portrait cover reads smaller than Books One/Three, per request — the
+  /* Sized to roughly half the shared height above so the portrait cover
+     reads noticeably smaller than Books One/Three, per reference — the
      narrower resulting width also pushes .book-tile-body (flex: 1 1 auto,
      centered in whatever space remains, same as the other two tiles)
-     further right, matching Book One's text placement. */
-  .book-tile-portrait .book-tile-art img { height: clamp(260px, 23vw, 340px); }
+     further right, opening up the gap shown in the reference. */
+  .book-tile-portrait .book-tile-art img { height: clamp(195px, 17vw, 255px); }
   .book-tile-body {
     flex: 1 1 auto;
     align-items: center;
